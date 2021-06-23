@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import '../../models/activity_model.dart';
 import '../../models/trip_model.dart';
 
-import '../../views/city/widgets/activity_list.dart';
-import '../../views/city/widgets/trip_activity_list.dart';
-import '../../views/city/widgets/trip_overview.dart';
+import 'widgets/activity_list.dart';
+import 'widgets/trip_activity_list.dart';
+import 'widgets/trip_overview.dart';
 import '../../widgets/data.dart';
-// import '../../datas/data.dart' as data;
 
-class City extends StatefulWidget {
+class CityView extends StatefulWidget {
   @override
   _CityState createState() => _CityState();
 
@@ -27,7 +26,7 @@ class City extends StatefulWidget {
   }
 }
 
-class _CityState extends State<City> with WidgetsBindingObserver {
+class _CityState extends State<CityView> with WidgetsBindingObserver {
   // WidgetsBindingObserver es un mixin, car on ne l'hérite pas directement
   // le mot clé "with" ici permet d'heiter implicitement de cette classe
   // qui nous permettra de recupérer les différents state et d'etre notifier à

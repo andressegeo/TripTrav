@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'views/home/home.dart';
-import 'views/city/city.dart';
+import 'views/home/home_view.dart';
+import 'views/city/city_view.dart';
 import 'widgets/data.dart';
 
 main() {
@@ -34,10 +34,10 @@ class DymaTrip extends StatelessWidget {
             ),
       ),
       debugShowCheckedModeBanner: false,
-      home: Home(),
-      // home: Data(
-      //   child: City(),
-      // ),
+      // home: HomeView(),
+      home: Data(
+        child: CityView(),
+      ),
     );
   }
 }
