@@ -10,6 +10,9 @@ import 'widgets/trip_overview.dart';
 import '../../widgets/data.dart';
 
 class CityView extends StatefulWidget {
+  final City city;
+
+  CityView({this.city});
   @override
   _CityState createState() => _CityState();
 
@@ -125,8 +128,6 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // ici on recupère l'argument passé depuis la cityCard du pushNamed
-    City city = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -144,7 +145,7 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
             TripOverView(
               setDate: setDate,
               trip: myTrip,
-              cityName: city.name,
+              cityName: widget.city.name,
             ),
             Expanded(
               child: index == 0

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'models/city_model.dart';
 import 'views/home/home_view.dart';
 import 'views/city/city_view.dart';
 import 'widgets/data.dart';
@@ -41,7 +42,18 @@ class DymaTrip extends StatelessWidget {
       routes: {
         // On ne peut à la fois utiliser la route / et la propriété ^^ home, il faut choisir
         "/": (context) => HomeView(),
-        "/city": (context) => Data(child: CityView()),
+        // "/city": (context) => Data(child: CityView()),
+      },
+      onGenerateRoute: (settings) {
+        print(settings);
+        if (settings.name == "/city") {
+          final City city = settings.arguments;
+          return MaterialPageRoute(
+            builder: (context) {
+              return Data(child: CityView(city: city));
+            },
+          );
+        }
       },
       // home: Data(
       //   child: CityView(),
