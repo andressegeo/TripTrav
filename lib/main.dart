@@ -34,7 +34,15 @@ class DymaTrip extends StatelessWidget {
             ),
       ),
       debugShowCheckedModeBanner: false,
-      home: HomeView(),
+      // home: HomeView(),
+      // initialRoute: "/city",
+      // initialRoute permet de faire abstraction
+      //  de la home ou de la route:"/" Si existe, elle sera la première route à checker
+      routes: {
+        // On ne peut à la fois utiliser la route / et la propriété ^^ home, il faut choisir
+        "/": (context) => HomeView(),
+        "/city": (context) => Data(child: CityView()),
+      },
       // home: Data(
       //   child: CityView(),
       // ),

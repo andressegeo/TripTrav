@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../models/city_model.dart';
 
 import '../../models/activity_model.dart';
 import '../../models/trip_model.dart';
@@ -124,9 +125,14 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    // ici on recupère l'argument passé depuis la cityCard du pushNamed
+    City city = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.chevron_left),
+        leading: IconButton(
+          icon: Icon(Icons.chevron_left),
+          onPressed: () => Navigator.pop(context),
+        ),
         actions: [Icon(Icons.more_vert)],
         title: Text("Organisation Voyage"),
       ),
@@ -138,6 +144,7 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
             TripOverView(
               setDate: setDate,
               trip: myTrip,
+              cityName: city.name,
             ),
             Expanded(
               child: index == 0

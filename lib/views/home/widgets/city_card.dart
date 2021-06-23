@@ -4,14 +4,9 @@ import '../../../widgets/data.dart';
 import '../../../models/city_model.dart';
 
 class CityCard extends StatelessWidget {
-  // final String name;
-  // final String image;
-  // final bool checked;
-  // final Function updateChecked;
   final City city;
 
   CityCard({this.city});
-  // CityCard({this.name, this.image, this.checked, this.updateChecked});
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +24,14 @@ class CityCard extends StatelessWidget {
               fit: BoxFit.cover,
               child: InkWell(
                 onTap: () {
-                  // Quand on tape sur la ville, Navigator permet de stacker en haut de la pile via Push
-                  // La view City, Ici Le MaterialPageRoute permet en plus de passer la Ville, d'ajouter l'animation
-                  // permettant de rendre fluide la transition pour l'affichage de la cityView
-                  Navigator.push(
+                  // pushNamed va pousser via la route à trigger le widget à stacker en haut de la pile
+                  // via pushNamed on peut envoyer des arguments à la view pushé en exploitant la propriété argument
+                  // la recuperation de l'enfant se fera via la classe ModalRoute
+                  // ModalRoute.of(context).settings.arguments;
+                  Navigator.pushNamed(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Data(child: CityView());
-                      },
-                    ),
+                    "/city",
+                    arguments: city,
                   );
                 },
               ),

@@ -3,13 +3,14 @@ import 'package:intl/intl.dart';
 import '../../../models/trip_model.dart';
 
 class TripOverView extends StatelessWidget {
+  final String cityName;
   final Function setDate;
   final Trip trip;
   double get amount {
     return 0;
   }
 
-  TripOverView({this.setDate, this.trip});
+  TripOverView({this.cityName, this.setDate, this.trip});
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
@@ -25,7 +26,7 @@ class TripOverView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Paris",
+            cityName,
             style: TextStyle(
               fontSize: 30,
               decoration: TextDecoration.underline,
