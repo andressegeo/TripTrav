@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../views/city/city_view.dart';
+import '../../../widgets/data.dart';
 import '../../../models/city_model.dart';
 
 class CityCard extends StatelessWidget {
@@ -26,7 +28,19 @@ class CityCard extends StatelessWidget {
               image: AssetImage(city.image),
               fit: BoxFit.cover,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  // Quand on tape sur la ville, Navigator permet de stacker en haut de la pile via Push
+                  // La view City, Ici Le MaterialPageRoute permet en plus de passer la Ville, d'ajouter l'animation
+                  // permettant de rendre fluide la transition pour l'affichage de la cityView
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Data(child: CityView());
+                      },
+                    ),
+                  );
+                },
               ),
             ),
             Positioned(
