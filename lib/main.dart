@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_dyma_end/views/404/not_found.dart';
 import 'models/city_model.dart';
 import 'views/home/home_view.dart';
 import 'views/city/city_view.dart';
@@ -41,12 +42,12 @@ class DymaTrip extends StatelessWidget {
       //  de la home ou de la route:"/" Si existe, elle sera la première route à checker
       routes: {
         // On ne peut à la fois utiliser la route / et la propriété ^^ home, il faut choisir
-        "/": (context) => HomeView(),
+        HomeView.routeName: (context) => HomeView(),
         // "/city": (context) => Data(child: CityView()),
       },
       onGenerateRoute: (settings) {
         print(settings);
-        if (settings.name == "/city") {
+        if (settings.name == CityView.routeName) {
           final City city = settings.arguments;
           return MaterialPageRoute(
             builder: (context) {
@@ -54,6 +55,11 @@ class DymaTrip extends StatelessWidget {
             },
           );
         }
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(builder: (context) {
+          return NotFound();
+        });
       },
       // home: Data(
       //   child: CityView(),

@@ -3,6 +3,8 @@ import '../../models/city_model.dart';
 import 'widgets/city_card.dart';
 
 class HomeView extends StatefulWidget {
+  static String routeName = "/";
+
   @override
   _HomeState createState() => _HomeState();
 }

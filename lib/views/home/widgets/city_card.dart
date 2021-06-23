@@ -28,7 +28,7 @@ class CityCard extends StatelessWidget {
                   // ModalRoute.of(context).settings.arguments;
                   Navigator.pushNamed(
                     context,
-                    "/city",
+                    "/not_found_page_test",
                     arguments: city,
                   );
                 },
