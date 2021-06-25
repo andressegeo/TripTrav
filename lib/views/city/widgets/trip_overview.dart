@@ -6,11 +6,9 @@ class TripOverView extends StatelessWidget {
   final String cityName;
   final Function setDate;
   final Trip trip;
-  double get amount {
-    return 0;
-  }
+  double amount;
 
-  TripOverView({this.cityName, this.setDate, this.trip});
+  TripOverView({this.cityName, this.setDate, this.trip, this.amount});
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;

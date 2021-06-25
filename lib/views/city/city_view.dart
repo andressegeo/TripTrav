@@ -69,6 +69,21 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
         .toList();
   }
 
+  // Combiner en addition les amounts quand on selectionne dans la cityView
+  double get amount {
+    return myTrip.activities.fold(
+      0.00,
+      (previousValue, element) {
+        var activity = activities.firstWhere(
+          (activity) {
+            return activity.id == element;
+          },
+        );
+        return previousValue + activity.price;
+      },
+    );
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // Methode qui sera invoqué automatiquement à chaque fois que l'état va etre amené à évoluer
@@ -147,6 +162,7 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
               setDate: setDate,
               trip: myTrip,
               cityName: widget.city.name,
+              amount: amount,
             ),
             Expanded(
               child: index == 0
