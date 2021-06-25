@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+import '../../../models/city_model.dart';
+
+class CityCard extends StatelessWidget {
+  final City city;
+
+  CityCard({this.city});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 5,
+      child: Container(
+        height: 220,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Ink.image(
+              // Le ink ici permet d'appeler le InkWell qui lui va aider à
+              // faire ressortir la sensation(la vaguelette) de Tap sur l'image
+              image: AssetImage(city.image),
+              fit: BoxFit.cover,
+              child: InkWell(
+                onTap: () {
+                  // pushNamed va pousser via la route à trigger le widget à stacker en haut de la pile
+                  // via pushNamed on peut envoyer des arguments à la view pushé en exploitant la propriété argument
+                  // la recuperation de l'enfant se fera via la classe ModalRoute
+                  // ModalRoute.of(context).settings.arguments;
+                  Navigator.pushNamed(
+                    context,
+                    "/not_found_page_test",
+                    arguments: city,
+                  );
+                },
+              ),
+            ),
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                color: Colors.black54,
+                child: Text(
+                  city.name,
+                  style: TextStyle(
+                    fontSize: 35,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
