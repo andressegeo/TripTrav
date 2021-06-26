@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:project_dyma_end/widgets/dyma_drawer.dart';
+import '../../widgets/dyma_drawer.dart';
 import '../../widgets/ask_modal.dart';
 import '../../models/city_model.dart';
 import 'widgets/city_card.dart';
 
 class HomeView extends StatefulWidget {
-  static String routeName = "/";
+  static const String routeName = "/";
 
   @override
   _HomeState createState() => _HomeState();

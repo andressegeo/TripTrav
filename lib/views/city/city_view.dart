@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../views/home/home_view.dart';
-import '../../widgets/dyma_drawer.dart';
-import '../../models/city_model.dart';
 
 import '../../models/activity_model.dart';
+import '../../models/city_model.dart';
 import '../../models/trip_model.dart';
 
+import '../../views/home/home_view.dart';
+import '../../widgets/data.dart';
+import '../../widgets/dyma_drawer.dart';
 import 'widgets/activity_list.dart';
 import 'widgets/trip_activity_list.dart';
 import 'widgets/trip_overview.dart';
-import '../../widgets/data.dart';
 
 class CityView extends StatefulWidget {
-  static String routeName = "/city";
+  static const String routeName = "/city";
   final City city;
 
   CityView({this.city});

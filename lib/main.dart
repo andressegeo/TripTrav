@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_dyma_end/views/404/not_found.dart';
 import 'models/city_model.dart';
+import 'views/trips/trips_view.dart';
+import 'views/404/not_found.dart';
 import 'views/home/home_view.dart';
 import 'views/city/city_view.dart';
 import 'widgets/data.dart';
@@ -47,14 +48,26 @@ class DymaTrip extends StatelessWidget {
         // "/city": (context) => Data(child: CityView()),
       },
       onGenerateRoute: (settings) {
-        print(settings);
-        if (settings.name == CityView.routeName) {
-          final City city = settings.arguments;
-          return MaterialPageRoute(
-            builder: (context) {
-              return Data(child: CityView(city: city));
-            },
-          );
+        switch (settings.name) {
+          case CityView.routeName:
+            {
+              return MaterialPageRoute(
+                builder: (context) {
+                  final City city = settings.arguments;
+                  return Data(
+                    child: CityView(city: city),
+                  );
+                },
+              );
+            }
+          case TripsView.routeName:
+            {
+              return MaterialPageRoute(
+                builder: (context) {
+                  return TripsView();
+                },
+              );
+            }
         }
       },
       onUnknownRoute: (settings) {
