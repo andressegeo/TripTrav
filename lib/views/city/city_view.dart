@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_dyma_end/views/home/home_view.dart';
+import '../../views/home/home_view.dart';
+import '../../widgets/dyma_drawer.dart';
 import '../../models/city_model.dart';
 
 import '../../models/activity_model.dart';
@@ -189,13 +190,13 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.chevron_left),
-          onPressed: () => Navigator.pop(context),
-        ),
-        actions: [Icon(Icons.more_vert)],
+        // leading: IconButton(
+        //   icon: Icon(Icons.chevron_left),
+        //   onPressed: () => Navigator.pop(context),
+        // ),
         title: Text("Organisation Voyage"),
       ),
+      drawer: DymaDrawer(),
       body: Container(
         // padding: EdgeInsets.all(10),
         child: widget.showContext(

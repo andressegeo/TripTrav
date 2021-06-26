@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_dyma_end/widgets/dyma_drawer.dart';
 import '../../widgets/ask_modal.dart';
 import '../../models/city_model.dart';
 import 'widgets/city_card.dart';
@@ -27,10 +28,11 @@ class _HomeState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.home),
+        // leading: Icon(Icons.home),
         title: Text("DymaTrip"),
         actions: [Icon(Icons.more_vert)],
       ),
+      drawer: DymaDrawer(),
       body: Container(
         padding: EdgeInsets.all(10),
         child: Column(
