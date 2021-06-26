@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_dyma_end/views/home/home_view.dart';
 import '../../models/city_model.dart';
 
 import '../../models/activity_model.dart';
@@ -142,6 +143,48 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
     });
   }
 
+  void saveTrip() async {
+    var result = await showDialog(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: Text("Voulez vous sauvegarder?"),
+          contentPadding: EdgeInsets.all(20),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  child: Text("Annuler"),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.grey),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context, "cancel");
+                  },
+                ),
+                // Petite separation entre les 2 children<Widget>
+                SizedBox(width: 20),
+                ElevatedButton(
+                  child: Text(
+                    "Sauvegarder",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context, "save");
+                  },
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
+    print(result);
+    Navigator.pushNamed(context, HomeView.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,6 +221,12 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.forward),
+        onPressed: saveTrip,
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
