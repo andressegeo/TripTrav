@@ -14,8 +14,8 @@ class DymaTrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.red,
-        accentColor: Colors.green,
+        // primarySwatch: Colors.red,
+        // accentColor: Colors.green,
         appBarTheme: AppBarTheme(
           // definition d'un theme pour le texte dans nos AppBar
           // en copiant les memes valeurs d'autres features mais en modifiant juste le fontSize du texte
@@ -28,12 +28,13 @@ class DymaTrip extends StatelessWidget {
         // Pour l'utiliser dans un composant, exploiter l'inheritedWidget qu'est theme
         // dans le widget enfant puis appeler la propriété headline6
         // Le texte de l'enfant aura donc la couleur Bleu
-        textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
-                color: Colors.blue,
-                // fontSize: 30,
-              ),
-            ),
+
+        // textTheme: ThemeData.light().textTheme.copyWith(
+        //       headline6: TextStyle(
+        //         color: Colors.blue,
+        //         // fontSize: 30,
+        //       ),
+        //     ),
       ),
       debugShowCheckedModeBanner: false,
       // home: HomeView(),
