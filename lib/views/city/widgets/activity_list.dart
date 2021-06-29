@@ -7,7 +7,11 @@ class ActivityList extends StatelessWidget {
   final List<String> selectedActivities;
   final Function toggleActivity;
 
-  ActivityList({this.activities, this.selectedActivities, this.toggleActivity});
+  const ActivityList({
+    this.activities,
+    this.selectedActivities,
+    this.toggleActivity,
+  });
 
   @override
   Widget build(BuildContext context) {

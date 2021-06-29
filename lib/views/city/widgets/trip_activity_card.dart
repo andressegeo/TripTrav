@@ -44,9 +44,38 @@ class _TripActivityCardState extends State<TripActivityCard> {
         ),
         subtitle: Text(widget.activity.city),
         trailing: IconButton(
-          icon: Icon(Icons.delete),
-          color: Theme.of(context).accentColor,
-          onPressed: () => widget.deleteTripActivity(widget.activity.id),
+          icon: const Icon(Icons.delete),
+          color: color,
+          onPressed: () {
+            widget.deleteTripActivity(widget.activity.id);
+            // showSnackBar is depracated, so use
+            // Scaffold.of(context).showSnackBar(
+            //   SnackBar(
+            //     content: Text(
+            //       "Activité ${widget.activity.name} supprimée",
+            //       textAlign: TextAlign.center,
+            //     ),
+            //     backgroundColor: Colors.red,
+            //   ),
+            // );
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  "Activité ${widget.activity.name} supprimée",
+                  textAlign: TextAlign.center,
+                ),
+                backgroundColor: Colors.red,
+                duration: const Duration(seconds: 2),
+                action: SnackBarAction(
+                  label: "Annuler",
+                  textColor: Colors.white,
+                  onPressed: () {
+                    print("Undo - Activité ${widget.activity.name} supprimée");
+                  },
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

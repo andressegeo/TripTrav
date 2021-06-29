@@ -28,7 +28,7 @@ class CityCard extends StatelessWidget {
                   // ModalRoute.of(context).settings.arguments;
                   Navigator.pushNamed(
                     context,
-                    "/not_found_page_test",
+                    "/city", // If we passed and unknowRoute(/qsdqlsdj for e.g), it will call not_found view on 404 folder
                     arguments: city,
                   );
                 },
@@ -38,11 +38,12 @@ class CityCard extends StatelessWidget {
               top: 10,
               left: 10,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 color: Colors.black54,
                 child: Text(
                   city.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 35,
                     color: Colors.white,
                   ),

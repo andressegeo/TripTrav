@@ -1,5 +1,14 @@
+import 'package:flutter/foundation.dart';
+
+import '../models/activity_model.dart';
+
 class City {
   String image;
   String name;
-  City({this.image, this.name});
+  List<Activity> activities;
+  City({
+    @required this.image,
+    @required this.name,
+    @required this.activities,
+  });
 }

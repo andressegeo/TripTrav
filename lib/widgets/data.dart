@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_dyma_end/models/city_model.dart';
 import '../models/activity_model.dart';
 import '../datas/data.dart' as data;
 
@@ -7,7 +8,7 @@ class Data extends InheritedWidget {
   // a la différence permet de forwarder la data entre tous ces wwidgets enfants
   // cela facilite la propagation de données entre les enfants et evite d'utiliser
   // et de toujours passer systematiquement une function du parent aux enfant qui persiste la données
-  final List<Activity> activities = data.activities;
+  final List<City> activities = data.cities;
 
   Data({Widget child}) : super(child: child);
 
