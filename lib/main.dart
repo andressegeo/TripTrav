@@ -19,7 +19,29 @@ class DymaTrip extends StatefulWidget {
 }
 
 class _DymaTripState extends State<DymaTrip> {
-  List<Trip> trips = [];
+  List<Trip> trips = [
+    Trip(
+      activities: [],
+      city: "Paris",
+      date: DateTime.now().add(
+        Duration(days: 1),
+      ),
+    ),
+    Trip(
+      activities: [],
+      city: "Lyon",
+      date: DateTime.now().add(
+        Duration(days: 2),
+      ),
+    ),
+    Trip(
+      activities: [],
+      city: "Nice",
+      date: DateTime.now().subtract(
+        Duration(days: 1),
+      ),
+    )
+  ];
 
   void addTrip(Trip trip) {
     setState(() {

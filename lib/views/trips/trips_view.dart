@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_dyma_end/views/trips/widgets/trip_list.dart';
+import 'package:project_dyma_end/widgets/dyma_drawer.dart';
 import '../../models/trip_model.dart';
 
 class TripsView extends StatefulWidget {
@@ -14,11 +15,44 @@ class TripsView extends StatefulWidget {
 class _TripsViewState extends State<TripsView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Mes Voyages"),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Mes Voyages"),
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                text: "Passés",
+                icon: Icon(Icons.directions_car),
+              ),
+              Tab(
+                text: "A venir",
+                icon: Icon(Icons.directions_transit),
+              ),
+            ],
+          ),
+        ),
+        drawer: DymaDrawer(),
+        body: TabBarView(
+          children: [
+            TripList(
+              trips: widget.trips
+                  .where(
+                    (trip) => DateTime.now().isAfter(trip.date),
+                  )
+                  .toList(),
+            ),
+            TripList(
+              trips: widget.trips
+                  .where(
+                    (trip) => DateTime.now().isBefore(trip.date),
+                  )
+                  .toList(),
+            ),
+          ],
+        ),
       ),
-      body: TripList(trips: widget.trips),
     );
   }
 }
