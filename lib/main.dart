@@ -1,16 +1,38 @@
 import 'package:flutter/material.dart';
+import 'models/trip_model.dart';
 import 'models/city_model.dart';
 import 'views/trips/trips_view.dart';
 import 'views/404/not_found.dart';
 import 'views/home/home_view.dart';
 import 'views/city/city_view.dart';
 import 'widgets/data.dart';
+import 'datas/data.dart' as data;
 
 main() {
   runApp(DymaTrip());
 }
 
-class DymaTrip extends StatelessWidget {
+class DymaTrip extends StatefulWidget {
+  final List<City> cities = data.cities;
+  @override
+  _DymaTripState createState() => _DymaTripState();
+}
+
+class _DymaTripState extends State<DymaTrip> {
+  List<Trip> trips = [];
+
+  void addTrip(Trip trip) {
+    setState(() {
+      trips.add(trip);
+    });
+  }
+
+  void removeAdd(Trip trip) {
+    setState(() {
+      trips.remove(trip);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,7 +66,9 @@ class DymaTrip extends StatelessWidget {
       //  de la home ou de la route:"/" Si existe, elle sera la première route à checker
       routes: {
         // On ne peut à la fois utiliser la route / et la propriété ^^ home, il faut choisir
-        HomeView.routeName: (context) => HomeView(),
+        HomeView.routeName: (context) => HomeView(
+              cities: widget.cities,
+            ),
         // "/city": (context) => Data(child: CityView()),
       },
       onGenerateRoute: (settings) {
@@ -54,8 +78,9 @@ class DymaTrip extends StatelessWidget {
               return MaterialPageRoute(
                 builder: (context) {
                   final City city = settings.arguments;
-                  return Data(
-                    child: CityView(city: city),
+                  return CityView(
+                    city: city,
+                    addTrip: addTrip,
                   );
                 },
               );
@@ -71,13 +96,12 @@ class DymaTrip extends StatelessWidget {
         }
       },
       onUnknownRoute: (settings) {
-        return MaterialPageRoute(builder: (context) {
-          return NotFound();
-        });
+        return MaterialPageRoute(
+          builder: (context) {
+            return NotFound();
+          },
+        );
       },
-      // home: Data(
-      //   child: CityView(),
-      // ),
     );
   }
 }

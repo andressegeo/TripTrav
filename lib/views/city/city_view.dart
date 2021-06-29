@@ -14,8 +14,13 @@ import 'widgets/trip_overview.dart';
 class CityView extends StatefulWidget {
   static const String routeName = "/city";
   final City city;
+  final Function addTrip;
 
-  CityView({this.city});
+  List<Activity> get activities {
+    return city.activities;
+  }
+
+  CityView({this.city, this.addTrip});
   @override
   _CityState createState() => _CityState();
 
@@ -33,23 +38,13 @@ class CityView extends StatefulWidget {
   }
 }
 
-class _CityState extends State<CityView> with WidgetsBindingObserver {
-  // WidgetsBindingObserver es un mixin, car on ne l'hérite pas directement
-  // le mot clé "with" ici permet d'heiter implicitement de cette classe
-  // qui nous permettra de recupérer les différents state et d'etre notifier à
-  // chaque fois qu'il y aura changement d'état de l'app pour éffectuer
-  // d'opérations comme liberer la mémoire en supprimant(dispose) la ressource d'un widget
-  // si le user venait à state = suspended(inactive, paused,resumed, suspended) l'app
-
+class _CityState extends State<CityView> {
   Trip myTrip;
   int index;
-  List<Activity> activities;
 
   @override
   void initState() {
     super.initState();
-    // Ici on enregistre notre widget dans l'engine interne de flutter pour q'il le prenne en compte
-    WidgetsBinding.instance.addObserver(this);
     index = 0;
     myTrip = Trip(
       city: "Paris",
@@ -58,15 +53,8 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
     );
   }
 
-  @override
-  didChangeDependencies() {
-    super.didChangeDependencies();
-    // activities = context.dependOnInheritedWidgetOfExactType<Data>().context;
-    activities = Data.of(context).activities;
-  }
-
   List<Activity> get tripActivities {
-    return activities
+    return widget.activities
         .where((activity) => myTrip.activities.contains(activity.id))
         .toList();
   }
@@ -76,7 +64,7 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
     return myTrip.activities.fold(
       0.00,
       (previousValue, element) {
-        var activity = activities.firstWhere(
+        var activity = widget.activities.firstWhere(
           (activity) {
             return activity.id == element;
           },
@@ -84,20 +72,6 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
         return previousValue + activity.price;
       },
     );
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // Methode qui sera invoqué automatiquement à chaque fois que l'état va etre amené à évoluer
-    super.didChangeAppLifecycleState(state);
-    print(state);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    // Nétoyer, retirer notre observer
-    WidgetsBinding.instance.removeObserver(this);
   }
 
   void setDate() {
@@ -131,8 +105,6 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
       myTrip.activities.contains(id)
           ? myTrip.activities.remove(id)
           : myTrip.activities.add(id);
-
-      // print("my activities: ${myTrip.activities}");
     });
   }
 
@@ -182,8 +154,11 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
         );
       },
     );
-    print(result);
-    Navigator.pushNamed(context, HomeView.routeName);
+    if (result == "save") {
+      print(myTrip.activities);
+      widget.addTrip(myTrip);
+      Navigator.pushNamed(context, HomeView.routeName);
+    }
   }
 
   @override
@@ -211,7 +186,7 @@ class _CityState extends State<CityView> with WidgetsBindingObserver {
             Expanded(
               child: index == 0
                   ? ActivityList(
-                      activities: activities,
+                      activities: widget.activities,
                       selectedActivities: myTrip.activities,
                       toggleActivity: toggleActivity,
                     )
