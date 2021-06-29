@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Activity {
   String name;
   String image;
@@ -5,5 +7,11 @@ class Activity {
   String city;
   double price;
 
-  Activity({this.name, this.image, this.id, this.city, this.price});
+  Activity({
+    @required this.name,
+    @required this.image,
+    @required this.id,
+    @required this.city,
+    @required this.price,
+  });
 }

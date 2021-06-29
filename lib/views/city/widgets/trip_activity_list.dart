@@ -11,7 +11,7 @@ class TripActivityList extends StatelessWidget {
     print(activity.name);
   }
 
-  TripActivityList({this.activities, this.deleteTripActivity});
+  const TripActivityList({this.activities, this.deleteTripActivity});
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ class NotFound extends StatelessWidget {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        child: Text("Oops, Not Found"),
+        child: const Text("Oops, Not Found"),
       ),
     );
   }

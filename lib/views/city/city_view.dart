@@ -121,14 +121,14 @@ class _CityState extends State<CityView> {
       context: context,
       builder: (context) {
         return SimpleDialog(
-          title: Text("Voulez vous sauvegarder?"),
-          contentPadding: EdgeInsets.all(20),
+          title: const Text("Voulez vous sauvegarder?"),
+          contentPadding: const EdgeInsets.all(20),
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  child: Text("Annuler"),
+                  child: const Text("Annuler"),
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.grey),
@@ -138,11 +138,11 @@ class _CityState extends State<CityView> {
                   },
                 ),
                 // Petite separation entre les 2 children<Widget>
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 ElevatedButton(
-                  child: Text(
+                  child: const Text(
                     "Sauvegarder",
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
                     Navigator.pop(context, "save");
@@ -168,9 +168,9 @@ class _CityState extends State<CityView> {
         //   icon: Icon(Icons.chevron_left),
         //   onPressed: () => Navigator.pop(context),
         // ),
-        title: Text("Organisation Voyage"),
+        title: const Text("Organisation Voyage"),
       ),
-      drawer: DymaDrawer(),
+      drawer: const DymaDrawer(),
       body: Container(
         // padding: EdgeInsets.all(10),
         child: widget.showContext(
@@ -198,7 +198,7 @@ class _CityState extends State<CityView> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.forward),
+        child: const Icon(Icons.forward),
         onPressed: saveTrip,
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
@@ -206,12 +206,12 @@ class _CityState extends State<CityView> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
+          const BottomNavigationBarItem(
+            icon: const Icon(Icons.map),
             label: "Decouverte",
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.stars),
+          const BottomNavigationBarItem(
+            icon: const Icon(Icons.stars),
             label: "Mes Activités",
           )
         ],

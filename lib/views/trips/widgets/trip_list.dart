@@ -5,7 +5,7 @@ import '../../../models/trip_model.dart';
 
 class TripList extends StatelessWidget {
   final List<Trip> trips;
-  TripList({this.trips});
+  const TripList({this.trips});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class TripList extends StatelessWidget {
           subtitle: trip.date != null
               ? Text(DateFormat("d/M/y").format(trip.date))
               : null,
-          trailing: Icon(Icons.info),
+          trailing: const Icon(Icons.info),
         );
       },
     );

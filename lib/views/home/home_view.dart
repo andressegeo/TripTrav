@@ -28,12 +28,12 @@ class _HomeState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         // leading: Icon(Icons.home),
-        title: Text("DymaTrip"),
+        title: const Text("DymaTrip"),
         actions: [Icon(Icons.more_vert)],
       ),
-      drawer: DymaDrawer(),
+      drawer: const DymaDrawer(),
       body: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,

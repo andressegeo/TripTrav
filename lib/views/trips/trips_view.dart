@@ -19,21 +19,21 @@ class _TripsViewState extends State<TripsView> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Mes Voyages"),
-          bottom: TabBar(
+          title: const Text("Mes Voyages"),
+          bottom: const TabBar(
             tabs: [
-              Tab(
+              const Tab(
                 text: "Passés",
                 icon: Icon(Icons.directions_car),
               ),
-              Tab(
+              const Tab(
                 text: "A venir",
                 icon: Icon(Icons.directions_transit),
               ),
             ],
           ),
         ),
-        drawer: DymaDrawer(),
+        drawer: const DymaDrawer(),
         body: TabBarView(
           children: [
             TripList(

@@ -3,6 +3,8 @@ import '../views/trips/trips_view.dart';
 import '../views/home/home_view.dart';
 
 class DymaDrawer extends StatelessWidget {
+  const DymaDrawer();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(

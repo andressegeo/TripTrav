@@ -44,7 +44,7 @@ class _TripActivityCardState extends State<TripActivityCard> {
         ),
         subtitle: Text(widget.activity.city),
         trailing: IconButton(
-          icon: Icon(Icons.delete),
+          icon: const Icon(Icons.delete),
           color: color,
           onPressed: () {
             widget.deleteTripActivity(widget.activity.id);
@@ -65,7 +65,7 @@ class _TripActivityCardState extends State<TripActivityCard> {
                   textAlign: TextAlign.center,
                 ),
                 backgroundColor: Colors.red,
-                duration: Duration(seconds: 2),
+                duration: const Duration(seconds: 2),
                 action: SnackBarAction(
                   label: "Annuler",
                   textColor: Colors.white,

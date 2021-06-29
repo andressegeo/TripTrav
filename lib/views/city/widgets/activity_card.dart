@@ -6,7 +6,11 @@ class ActivityCard extends StatelessWidget {
   final bool isSelected;
   final Function toggleActivity;
 
-  ActivityCard({this.activity, this.isSelected, this.toggleActivity});
+  ActivityCard({
+    this.activity,
+    this.isSelected,
+    this.toggleActivity,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +18,7 @@ class ActivityCard extends StatelessWidget {
         // on veut le plus grand espace disponible utiliser double.infinity
         // width: double.infinity,
         // height: 250,
-        margin: EdgeInsets.all(5),
+        margin: const EdgeInsets.all(5),
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -26,7 +30,7 @@ class ActivityCard extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
                   Expanded(
@@ -35,7 +39,7 @@ class ActivityCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         if (isSelected)
-                          Icon(
+                          const Icon(
                             Icons.check,
                             size: 40,
                             color: Colors.white,
@@ -51,7 +55,7 @@ class ActivityCard extends StatelessWidget {
                           // Sur une ligne, remove to see in 2 ligne
                           child: Text(
                             activity.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 20,
                               color: Colors.white,
                             ),
