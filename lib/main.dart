@@ -89,7 +89,7 @@ class _DymaTripState extends State<DymaTrip> {
             {
               return MaterialPageRoute(
                 builder: (context) {
-                  return TripsView();
+                  return TripsView(trips: trips);
                 },
               );
             }

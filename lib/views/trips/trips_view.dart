@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:project_dyma_end/views/trips/widgets/trip_list.dart';
+import '../../models/trip_model.dart';
 
 class TripsView extends StatefulWidget {
+  final List<Trip> trips;
   static const String routeName = "/trips";
+
+  TripsView({this.trips});
   @override
   _TripsViewState createState() => _TripsViewState();
 }
@@ -13,10 +18,7 @@ class _TripsViewState extends State<TripsView> {
       appBar: AppBar(
         title: Text("Mes Voyages"),
       ),
-      body: Container(
-        alignment: Alignment.center,
-        child: Text("trips"),
-      ),
+      body: TripList(trips: widget.trips),
     );
   }
 }

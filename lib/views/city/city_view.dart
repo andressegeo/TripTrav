@@ -77,9 +77,9 @@ class _CityState extends State<CityView> {
   void setDate() {
     showDatePicker(
       context: context,
-      initialDate: DateTime.now().add(Duration(days: 1)),
+      initialDate: DateTime.now().add(Duration(days: 10)),
       firstDate: DateTime.now(),
-      lastDate: DateTime(2022),
+      lastDate: DateTime(2023),
     ).then(
       (newDate) {
         if (newDate != null) {
@@ -155,7 +155,6 @@ class _CityState extends State<CityView> {
       },
     );
     if (result == "save") {
-      print(myTrip.activities);
       widget.addTrip(myTrip);
       Navigator.pushNamed(context, HomeView.routeName);
     }
