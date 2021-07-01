@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../views/trip/trip_view.dart';
 import '../../../models/trip_model.dart';
 
 class TripList extends StatelessWidget {
@@ -21,6 +22,12 @@ class TripList extends StatelessWidget {
               ? Text(DateFormat("d/M/y").format(trip.date))
               : null,
           trailing: const Icon(Icons.info),
+          onTap: () {
+            return Navigator.pushNamed(context, TripView.routeName, arguments: {
+              "tripId": trip.id,
+              "cityName": trip.city,
+            });
+          },
         );
       },
     );
