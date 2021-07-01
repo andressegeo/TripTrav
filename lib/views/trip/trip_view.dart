@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../views/trip/widgets/trip_city_bar.dart';
 import '../../models/city_model.dart';
 import '../../models/trip_model.dart';
 
@@ -16,7 +17,17 @@ class _TripViewState extends State<TripView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("123"),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TripCityBar(city: widget.city),
+            Container(
+              height: 800,
+              color: Colors.blue,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
