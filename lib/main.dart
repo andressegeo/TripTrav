@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:project_dyma_end/views/trip/trip_view.dart';
+import 'models/activity_model.dart';
+import 'views/trip/trip_view.dart';
 import 'models/trip_model.dart';
 import 'models/city_model.dart';
 import 'views/trips/trips_view.dart';
 import 'views/404/not_found.dart';
 import 'views/home/home_view.dart';
 import 'views/city/city_view.dart';
-import 'widgets/data.dart';
 import 'datas/data.dart' as data;
 
 main() {
@@ -22,7 +22,29 @@ class DymaTrip extends StatefulWidget {
 class _DymaTripState extends State<DymaTrip> {
   List<Trip> trips = [
     Trip(
-      activities: [],
+      activities: [
+        Activity(
+          image: "assets/images/activities/louvre.jpeg",
+          name: "Louvre",
+          id: "a1",
+          city: "Paris",
+          price: 12.00,
+        ),
+        Activity(
+          image: "assets/images/activities/chaumont.jpeg",
+          name: "Chaumont",
+          id: "a2",
+          city: "Paris",
+          price: 0.00,
+        ),
+        Activity(
+          image: "assets/images/activities/dame.jpeg",
+          name: "Notre Dame",
+          id: "a3",
+          city: "Paris",
+          price: 0.00,
+        ),
+      ],
       city: "Paris",
       date: DateTime.now().add(
         Duration(days: 1),
