@@ -160,6 +160,7 @@ List<Trip> trips = [
         id: "a2",
         city: "Paris",
         price: 0.00,
+        status: ActivityStatus.done,
       ),
       Activity(
         image: "assets/images/activities/dame.jpeg",

@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:project_dyma_end/models/activity_model.dart';
 import '../models/trip_model.dart';
 import '../datas/data.dart' as data;
 
@@ -13,6 +14,14 @@ class TripProvider with ChangeNotifier {
 
   void addTrip(Trip trip) {
     _trips.add(trip);
+    notifyListeners();
+  }
+
+  Trip getTripById(String tripId) =>
+      trips.firstWhere((trip) => trip.id == tripId);
+
+  void setActivityToDone(Activity activity) {
+    activity.status = ActivityStatus.done;
     notifyListeners();
   }
 }

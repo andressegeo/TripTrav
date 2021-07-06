@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_dyma_end/models/activity_model.dart';
-import 'package:project_dyma_end/views/trip/widgets/trip_activity_list.dart';
+import '../../../models/activity_model.dart';
+import '../../../views/trip/widgets/trip_activity_list.dart';
 
 class TripActivities extends StatelessWidget {
   final List<Activity> activities;
@@ -33,8 +33,20 @@ class TripActivities extends StatelessWidget {
               child: TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 children: [
-                  TripActivityList(activities: activities),
-                  TripActivityList(activities: activities),
+                  TripActivityList(
+                    activities: activities
+                        .where((activity) =>
+                            activity.status == ActivityStatus.ongoing)
+                        .toList(),
+                    filter: ActivityStatus.ongoing,
+                  ),
+                  TripActivityList(
+                    activities: activities
+                        .where((activity) =>
+                            activity.status == ActivityStatus.done)
+                        .toList(),
+                    filter: ActivityStatus.done,
+                  ),
                 ],
               ),
             )
