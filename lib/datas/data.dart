@@ -1,3 +1,5 @@
+import '../models/trip_model.dart';
+
 import '../models/city_model.dart';
 
 import '../models/activity_model.dart';
@@ -140,4 +142,50 @@ List<City> cities = [
       ),
     ],
   ),
+];
+
+List<Trip> trips = [
+  Trip(
+    activities: [
+      Activity(
+        image: "assets/images/activities/louvre.jpeg",
+        name: "Louvre",
+        id: "a1",
+        city: "Paris",
+        price: 12.00,
+      ),
+      Activity(
+        image: "assets/images/activities/chaumont.jpeg",
+        name: "Chaumont",
+        id: "a2",
+        city: "Paris",
+        price: 0.00,
+      ),
+      Activity(
+        image: "assets/images/activities/dame.jpeg",
+        name: "Notre Dame",
+        id: "a3",
+        city: "Paris",
+        price: 0.00,
+      ),
+    ],
+    city: "Paris",
+    date: DateTime.now().add(
+      Duration(days: 1),
+    ),
+  ),
+  Trip(
+    activities: [],
+    city: "Lyon",
+    date: DateTime.now().add(
+      Duration(days: 2),
+    ),
+  ),
+  Trip(
+    activities: [],
+    city: "Nice",
+    date: DateTime.now().subtract(
+      Duration(days: 1),
+    ),
+  )
 ];

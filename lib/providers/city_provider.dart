@@ -1,7 +1,6 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
-import 'package:project_dyma_end/models/city_model.dart';
+import '../models/city_model.dart';
 import '../datas/data.dart' as data;
 
 class CityProvider with ChangeNotifier {
@@ -11,4 +10,7 @@ class CityProvider with ChangeNotifier {
   UnmodifiableListView<City> get cities {
     return UnmodifiableListView(_cities);
   }
+
+  City getCityByName(String cityName) =>
+      cities.firstWhere((city) => city.name == cityName);
 }

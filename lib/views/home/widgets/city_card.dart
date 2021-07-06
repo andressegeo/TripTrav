@@ -29,7 +29,7 @@ class CityCard extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     "/city", // If we passed and unknowRoute(/qsdqlsdj for e.g), it will call not_found view on 404 folder
-                    arguments: city,
+                    arguments: city.name,
                   );
                 },
               ),

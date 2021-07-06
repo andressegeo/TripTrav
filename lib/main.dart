@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project_dyma_end/providers/trip_provider.dart';
 import './providers/city_provider.dart';
 import 'package:provider/provider.dart';
-import 'models/activity_model.dart';
-import 'views/trip/trip_view.dart';
-import 'models/trip_model.dart';
-import 'models/city_model.dart';
-import 'views/trips/trips_view.dart';
 import 'views/404/not_found.dart';
 import 'views/home/home_view.dart';
 import 'views/city/city_view.dart';
@@ -20,52 +16,6 @@ class DymaTrip extends StatefulWidget {
 }
 
 class _DymaTripState extends State<DymaTrip> {
-  // List<Trip> trips = [
-  //   Trip(
-  //     activities: [
-  //       Activity(
-  //         image: "assets/images/activities/louvre.jpeg",
-  //         name: "Louvre",
-  //         id: "a1",
-  //         city: "Paris",
-  //         price: 12.00,
-  //       ),
-  //       Activity(
-  //         image: "assets/images/activities/chaumont.jpeg",
-  //         name: "Chaumont",
-  //         id: "a2",
-  //         city: "Paris",
-  //         price: 0.00,
-  //       ),
-  //       Activity(
-  //         image: "assets/images/activities/dame.jpeg",
-  //         name: "Notre Dame",
-  //         id: "a3",
-  //         city: "Paris",
-  //         price: 0.00,
-  //       ),
-  //     ],
-  //     city: "Paris",
-  //     date: DateTime.now().add(
-  //       Duration(days: 1),
-  //     ),
-  //   ),
-  //   Trip(
-  //     activities: [],
-  //     city: "Lyon",
-  //     date: DateTime.now().add(
-  //       Duration(days: 2),
-  //     ),
-  //   ),
-  //   Trip(
-  //     activities: [],
-  //     city: "Nice",
-  //     date: DateTime.now().subtract(
-  //       Duration(days: 1),
-  //     ),
-  //   )
-  // ];
-
   // void addTrip(Trip trip) {
   //   setState(
   //     () {
@@ -84,10 +34,15 @@ class _DymaTripState extends State<DymaTrip> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) {
-        return CityProvider();
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: CityProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: TripProvider(),
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           // primarySwatch: Colors.red,
@@ -120,6 +75,7 @@ class _DymaTripState extends State<DymaTrip> {
         routes: {
           // On ne peut à la fois utiliser la route / et la propriété ^^ home, il faut choisir
           HomeView.routeName: (context) => HomeView(),
+          CityView.routeName: (context) => CityView(),
           // "/city": (context) => Data(child: CityView()),
         },
         // onGenerateRoute: (settings) {
