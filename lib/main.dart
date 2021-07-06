@@ -1,5 +1,10 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
-import 'package:project_dyma_end/providers/trip_provider.dart';
+import 'package:project_dyma_end/models/trip_model.dart';
+import 'package:project_dyma_end/views/trip/trip_view.dart';
+import './providers/trip_provider.dart';
+import './views/trips/trips_view.dart';
 import './providers/city_provider.dart';
 import 'package:provider/provider.dart';
 import 'views/404/not_found.dart';
@@ -74,60 +79,14 @@ class _DymaTripState extends State<DymaTrip> {
         //  de la home ou de la route:"/" Si existe, elle sera la première route à checker
         routes: {
           // On ne peut à la fois utiliser la route / et la propriété ^^ home, il faut choisir
-          HomeView.routeName: (context) => HomeView(),
-          CityView.routeName: (context) => CityView(),
-          // "/city": (context) => Data(child: CityView()),
+          HomeView.routeName: (_) => HomeView(),
+          CityView.routeName: (_) => CityView(),
+          TripsView.routeName: (_) => TripsView(),
+          TripView.routeName: (_) => TripView()
         },
-        // onGenerateRoute: (settings) {
-        //   switch (settings.name) {
-        //     case CityView.routeName:
-        //       {
-        //         return MaterialPageRoute(
-        //           builder: (context) {
-        //             final City city = settings.arguments;
-        //             return CityView(
-        //               city: city,
-        //               addTrip: addTrip,
-        //             );
-        //           },
-        //         );
-        //       }
-        //     case TripsView.routeName:
-        //       {
-        //         return MaterialPageRoute(
-        //           builder: (context) {
-        //             return TripsView(trips: trips);
-        //           },
-        //         );
-        //       }
-        //     case TripView.routeName:
-        //       {
-        //         return MaterialPageRoute(
-        //           builder: (context) {
-        //             String tripId =
-        //                 (settings.arguments as Map<String, String>)["tripId"];
-        //             String cityName =
-        //                 (settings.arguments as Map<String, String>)["cityName"];
-        //             return TripView(
-        //               trip: trips.firstWhere(
-        //                 (trip) => trip.id == tripId,
-        //               ),
-        //               city: widget.cities.firstWhere(
-        //                 (city) => city.name == cityName,
-        //               ),
-        //             );
-        //           },
-        //         );
-        //       }
-        //   }
-        // },
-        onUnknownRoute: (settings) {
-          return MaterialPageRoute(
-            builder: (context) {
-              return NotFound();
-            },
-          );
-        },
+        onUnknownRoute: (_) => MaterialPageRoute(
+          builder: (_) => NotFound(),
+        ),
       ),
     );
   }

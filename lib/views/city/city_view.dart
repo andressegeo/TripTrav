@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../providers/trip_provider.dart';
 import '../../providers/city_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -161,6 +162,7 @@ class _CityState extends State<CityView> {
     } else if (result == "save") {
       // widget.addTrip(myTrip);
       myTrip.city = cityName;
+      Provider.of<TripProvider>(context, listen: false).addTrip(myTrip);
       Navigator.pushNamed(context, HomeView.routeName);
     }
   }
