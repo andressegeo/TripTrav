@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project_dyma_end/models/city_model.dart';
-import '../models/activity_model.dart';
 import '../datas/data.dart' as data;
 
 class Data extends InheritedWidget {

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:project_dyma_end/models/activity_model.dart';
-import 'package:project_dyma_end/views/trip/widgets/trip_activity_list.dart';
+import '../../../models/activity_model.dart';
+import '../../../views/trip/widgets/trip_activity_list.dart';
 
 class TripActivities extends StatelessWidget {
-  final List<Activity> activities;
+  final String tripId;
 
-  const TripActivities({Key key, this.activities}) : super(key: key);
+  const TripActivities({Key key, this.tripId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("BUILD: TripActivities");
     return Container(
       child: DefaultTabController(
         length: 2,
@@ -33,8 +34,14 @@ class TripActivities extends StatelessWidget {
               child: TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 children: [
-                  TripActivityList(activities: activities),
-                  TripActivityList(activities: activities),
+                  TripActivityList(
+                    tripId: tripId,
+                    filter: ActivityStatus.ongoing,
+                  ),
+                  TripActivityList(
+                    tripId: tripId,
+                    filter: ActivityStatus.done,
+                  ),
                 ],
               ),
             )

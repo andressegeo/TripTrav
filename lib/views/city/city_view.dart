@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import '../../providers/trip_provider.dart';
+import '../../providers/city_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/activity_model.dart';
 import '../../models/city_model.dart';
 import '../../models/trip_model.dart';
 
 import '../../views/home/home_view.dart';
-import '../../widgets/data.dart';
 import '../../widgets/dyma_drawer.dart';
 import 'widgets/activity_list.dart';
 import 'widgets/trip_activity_list.dart';
@@ -13,14 +15,7 @@ import 'widgets/trip_overview.dart';
 
 class CityView extends StatefulWidget {
   static const String routeName = "/city";
-  final City city;
-  final Function addTrip;
 
-  List<Activity> get activities {
-    return city.activities;
-  }
-
-  CityView({this.city, this.addTrip});
   @override
   _CityState createState() => _CityState();
 
@@ -47,7 +42,7 @@ class _CityState extends State<CityView> {
     super.initState();
     index = 0;
     myTrip = Trip(
-      city: widget.city.name,
+      city: null,
       activities: [],
       date: null,
     );
@@ -90,11 +85,13 @@ class _CityState extends State<CityView> {
   }
 
   void toggleActivity(Activity activity) {
-    setState(() {
-      myTrip.activities.contains(activity)
-          ? myTrip.activities.remove(activity)
-          : myTrip.activities.add(activity);
-    });
+    setState(
+      () {
+        myTrip.activities.contains(activity)
+            ? myTrip.activities.remove(activity)
+            : myTrip.activities.add(activity);
+      },
+    );
   }
 
   void deleteTripActivity(Activity activity) {
@@ -105,7 +102,7 @@ class _CityState extends State<CityView> {
     });
   }
 
-  void saveTrip() async {
+  void saveTrip(String cityName) async {
     var result = await showDialog(
       context: context,
       builder: (context) {
@@ -163,13 +160,17 @@ class _CityState extends State<CityView> {
             );
           });
     } else if (result == "save") {
-      widget.addTrip(myTrip);
+      // widget.addTrip(myTrip);
+      myTrip.city = cityName;
+      Provider.of<TripProvider>(context, listen: false).addTrip(myTrip);
       Navigator.pushNamed(context, HomeView.routeName);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    String cityName = ModalRoute.of(context).settings.arguments;
+    City city = Provider.of<CityProvider>(context).getCityByName(cityName);
     return Scaffold(
       appBar: AppBar(
         // leading: IconButton(
@@ -187,13 +188,13 @@ class _CityState extends State<CityView> {
             TripOverView(
               setDate: setDate,
               trip: myTrip,
-              cityName: widget.city.name,
+              cityName: city.name,
               amount: amount,
             ),
             Expanded(
               child: index == 0
                   ? ActivityList(
-                      activities: widget.activities,
+                      activities: city.activities,
                       selectedActivities: myTrip.activities,
                       toggleActivity: toggleActivity,
                     )
@@ -207,7 +208,9 @@ class _CityState extends State<CityView> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.forward),
-        onPressed: saveTrip,
+        onPressed: () {
+          saveTrip(city.name);
+        },
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
