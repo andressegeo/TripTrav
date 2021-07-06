@@ -90,11 +90,13 @@ class _CityState extends State<CityView> {
   }
 
   void toggleActivity(Activity activity) {
-    setState(() {
-      myTrip.activities.contains(activity)
-          ? myTrip.activities.remove(activity)
-          : myTrip.activities.add(activity);
-    });
+    setState(
+      () {
+        myTrip.activities.contains(activity)
+            ? myTrip.activities.remove(activity)
+            : myTrip.activities.add(activity);
+      },
+    );
   }
 
   void deleteTripActivity(Activity activity) {
