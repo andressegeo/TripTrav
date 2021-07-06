@@ -7,6 +7,7 @@ class TripCityBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("BUILD: TripCityBar");
     return Container(
       height: 200,
       child: Stack(

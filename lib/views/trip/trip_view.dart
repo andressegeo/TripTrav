@@ -11,21 +11,23 @@ class TripView extends StatelessWidget {
   static const String routeName = "/trip";
   @override
   Widget build(BuildContext context) {
+    print("BUILD: TripView");
     final String cityName = (ModalRoute.of(context).settings.arguments
         as Map<String, String>)["cityName"];
 
     final String tripId = (ModalRoute.of(context).settings.arguments
         as Map<String, String>)["tripId"];
-    final City city =
-        Provider.of<CityProvider>(context).getCityByName(cityName);
+    final City city = Provider.of<CityProvider>(context, listen: false)
+        .getCityByName(cityName);
 
-    final Trip trip = Provider.of<TripProvider>(context).getTripById(tripId);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
             TripCityBar(city: city),
-            TripActivities(activities: trip.activities),
+            TripActivities(
+              tripId: tripId,
+            ),
           ],
         ),
       ),

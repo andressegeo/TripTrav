@@ -3,12 +3,13 @@ import '../../../models/activity_model.dart';
 import '../../../views/trip/widgets/trip_activity_list.dart';
 
 class TripActivities extends StatelessWidget {
-  final List<Activity> activities;
+  final String tripId;
 
-  const TripActivities({Key key, this.activities}) : super(key: key);
+  const TripActivities({Key key, this.tripId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("BUILD: TripActivities");
     return Container(
       child: DefaultTabController(
         length: 2,
@@ -34,17 +35,11 @@ class TripActivities extends StatelessWidget {
                 physics: NeverScrollableScrollPhysics(),
                 children: [
                   TripActivityList(
-                    activities: activities
-                        .where((activity) =>
-                            activity.status == ActivityStatus.ongoing)
-                        .toList(),
+                    tripId: tripId,
                     filter: ActivityStatus.ongoing,
                   ),
                   TripActivityList(
-                    activities: activities
-                        .where((activity) =>
-                            activity.status == ActivityStatus.done)
-                        .toList(),
+                    tripId: tripId,
                     filter: ActivityStatus.done,
                   ),
                 ],

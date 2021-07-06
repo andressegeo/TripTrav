@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_dyma_end/models/trip_model.dart';
 import 'package:project_dyma_end/views/trip/trip_view.dart';
 import './providers/trip_provider.dart';
 import './views/trips/trips_view.dart';
