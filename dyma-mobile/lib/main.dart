@@ -4,6 +4,8 @@ import './providers/trip_provider.dart';
 import './views/trips/trips_view.dart';
 import './providers/city_provider.dart';
 import 'package:provider/provider.dart';
+import 'providers/city_provider.dart';
+import 'providers/city_provider.dart';
 import 'views/404/not_found.dart';
 import 'views/home/home_view.dart';
 import 'views/city/city_view.dart';
@@ -18,28 +20,20 @@ class DymaTrip extends StatefulWidget {
 }
 
 class _DymaTripState extends State<DymaTrip> {
-  // void addTrip(Trip trip) {
-  //   setState(
-  //     () {
-  //       trips.add(trip);
-  //     },
-  //   );
-  // }
+  final CityProvider cityProvider = CityProvider();
 
-  // void removeAdd(Trip trip) {
-  //   setState(
-  //     () {
-  //       trips.remove(trip);
-  //     },
-  //   );
-  // }
+  @override
+  void initState() {
+    cityProvider.fetchData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: CityProvider(),
+          value: cityProvider,
         ),
         ChangeNotifierProvider.value(
           value: TripProvider(),
