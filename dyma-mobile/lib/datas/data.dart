@@ -114,7 +114,7 @@ List<City> cities = [
     activities: [
       Activity(
         image: "assets/images/activities/nice_orthodox.jpeg",
-        name: "Opera",
+        name: "Eglise Orthodox",
         id: "n1",
         city: "Nice",
         price: 5.00,
