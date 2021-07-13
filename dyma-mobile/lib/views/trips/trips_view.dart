@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 import '../../providers/trip_provider.dart';
+import '../../providers/trip_provider.dart';
 import '../../views/trips/widgets/trip_list.dart';
 import '../../widgets/dyma_drawer.dart';
 import '../../models/trip_model.dart';
@@ -12,7 +13,7 @@ class TripsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Trip> trips = Provider.of<TripProvider>(context).trips;
+    TripProvider tripProvider = Provider.of<TripProvider>(context);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -32,25 +33,30 @@ class TripsView extends StatelessWidget {
           ),
         ),
         drawer: const DymaDrawer(),
-        body: trips.length > 0
-            ? TabBarView(
-                children: [
-                  TripList(
-                    trips: trips
-                        .where(
-                          (trip) => DateTime.now().isAfter(trip.date),
-                        )
-                        .toList(),
-                  ),
-                  TripList(
-                    trips: trips
-                        .where(
-                          (trip) => DateTime.now().isBefore(trip.date),
-                        )
-                        .toList(),
-                  ),
-                ],
-              )
+        body: tripProvider.isLoading == false
+            ? tripProvider.trips.length > 0
+                ? TabBarView(
+                    children: [
+                      TripList(
+                        trips: tripProvider.trips
+                            .where(
+                              (trip) => DateTime.now().isAfter(trip.date),
+                            )
+                            .toList(),
+                      ),
+                      TripList(
+                        trips: tripProvider.trips
+                            .where(
+                              (trip) => DateTime.now().isBefore(trip.date),
+                            )
+                            .toList(),
+                      ),
+                    ],
+                  )
+                : Container(
+                    alignment: Alignment.center,
+                    child: Text("Aucun voyage pour le moment..."),
+                  )
             : DymaLoader(),
       ),
     );

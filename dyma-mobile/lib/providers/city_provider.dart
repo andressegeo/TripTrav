@@ -8,6 +8,7 @@ import '../models/city_model.dart';
 
 class CityProvider with ChangeNotifier {
   final String host = "http://localhost:5000";
+  bool isLoading = false;
   List<City> _cities = [];
   // UnmodifiableListView coe son nom l'indique, va bloquer toute tentative
   // de modification de la list de city
@@ -20,6 +21,7 @@ class CityProvider with ChangeNotifier {
 
   Future<void> fetchData() async {
     try {
+      isLoading = true;
       http.Response resp = await http.get(
         // Uri.parse("http://10.0.2.2:5000/dyma-api/cities/"),
         Uri.parse("$host/dyma-api/cities/"),
@@ -30,10 +32,15 @@ class CityProvider with ChangeNotifier {
               (cityJson) => City.fromJson(cityJson),
             )
             .toList();
+        isLoading = false;
         notifyListeners();
+      } else if (resp.statusCode == 204) {
+        print("city status");
+        print(resp.statusCode);
       }
     } catch (e) {
       print("error");
+      isLoading = false;
       print(e);
     }
   }

@@ -9,6 +9,7 @@ import "dart:convert";
 
 class TripProvider with ChangeNotifier {
   final String host = "http://localhost:5000";
+  bool isLoading = false;
   List<Trip> _trips = [];
 
   UnmodifiableListView<Trip> get trips {
@@ -30,18 +31,27 @@ class TripProvider with ChangeNotifier {
 
   Future<void> fetchData() async {
     try {
+      isLoading = true;
       http.Response resp = await http.get(
         Uri.parse("$host/dyma-api/trips/"),
       );
       if (resp.statusCode == 200) {
+        print("status 200");
         _trips = (json.decode(resp.body) as List)
             .map(
               (tripJson) => Trip.fromJson(tripJson),
             )
             .toList();
+        isLoading = false;
         notifyListeners();
+      } else if (resp.statusCode == 204) {
+        print("trip status");
+        print(resp.statusCode);
+        isLoading = false;
       }
     } catch (e) {
+      print("errorTrip fetch");
+      isLoading = false;
       rethrow;
     }
   }
