@@ -33,7 +33,7 @@ class _TripActivityCardState extends State<TripActivityCard> {
     return Card(
       child: ListTile(
         leading: CircleAvatar(
-          backgroundImage: AssetImage(widget.activity.image),
+          backgroundImage: NetworkImage(widget.activity.image),
         ),
         title: Text(
           widget.activity.name,

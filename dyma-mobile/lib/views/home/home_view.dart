@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project_dyma_end/providers/city_provider.dart';
 import 'package:provider/provider.dart';
+import '../../providers/city_provider.dart';
 import '../../widgets/dyma_drawer.dart';
 import '../../widgets/ask_modal.dart';
 import '../../models/city_model.dart';
 import 'widgets/city_card.dart';
+import '../../widgets/dyma_loader.dart';
 
 class HomeView extends StatefulWidget {
   static const String routeName = "/";
@@ -32,19 +34,19 @@ class _HomeState extends State<HomeView> {
         actions: [Icon(Icons.more_vert)],
       ),
       drawer: const DymaDrawer(),
-      body: SingleChildScrollView(
+      body: Container(
         padding: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: cities
-              .map(
-                (city) => CityCard(
-                  city: city,
+        child: cities.length > 0
+            ? RefreshIndicator(
+                onRefresh: Provider.of<CityProvider>(context).fetchData,
+                child: ListView.builder(
+                  itemCount: cities.length,
+                  itemBuilder: (_, i) => CityCard(
+                    city: cities[i],
+                  ),
                 ),
               )
-              .toList(),
-        ),
+            : DymaLoader(),
       ),
     );
   }

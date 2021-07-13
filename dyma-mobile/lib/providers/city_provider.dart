@@ -7,6 +7,7 @@ import "dart:convert";
 import '../models/city_model.dart';
 
 class CityProvider with ChangeNotifier {
+  final String host = "http://localhost:5000";
   List<City> _cities = [];
   // UnmodifiableListView coe son nom l'indique, va bloquer toute tentative
   // de modification de la list de city
@@ -17,11 +18,11 @@ class CityProvider with ChangeNotifier {
   City getCityByName(String cityName) =>
       cities.firstWhere((city) => city.name == cityName);
 
-  void fetchData() async {
+  Future<void> fetchData() async {
     try {
       http.Response resp = await http.get(
         // Uri.parse("http://10.0.2.2:5000/dyma-api/cities/"),
-        Uri.parse("http://localhost:5000/dyma-api/cities/"),
+        Uri.parse("$host/dyma-api/cities/"),
       );
       if (resp.statusCode == 200) {
         _cities = (json.decode(resp.body) as List)

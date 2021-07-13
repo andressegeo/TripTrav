@@ -18,7 +18,8 @@ class CityCard extends StatelessWidget {
             Ink.image(
               // Le ink ici permet d'appeler le InkWell qui lui va aider à
               // faire ressortir la sensation(la vaguelette) de Tap sur l'image
-              image: AssetImage(city.image),
+              // image: AssetImage(city.image),
+              image: NetworkImage(city.image),
               fit: BoxFit.cover,
               child: InkWell(
                 onTap: () {

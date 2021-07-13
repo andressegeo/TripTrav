@@ -5,8 +5,8 @@ import './views/trips/trips_view.dart';
 import './providers/city_provider.dart';
 import 'package:provider/provider.dart';
 import 'providers/city_provider.dart';
-import 'providers/city_provider.dart';
-import 'views/404/not_found.dart';
+import 'providers/trip_provider.dart';
+import 'views/not-found/not_found.dart';
 import 'views/home/home_view.dart';
 import 'views/city/city_view.dart';
 
@@ -21,10 +21,11 @@ class DymaTrip extends StatefulWidget {
 
 class _DymaTripState extends State<DymaTrip> {
   final CityProvider cityProvider = CityProvider();
-
+  final TripProvider tripProvider = TripProvider();
   @override
   void initState() {
     cityProvider.fetchData();
+    tripProvider.fetchData();
     super.initState();
   }
 
@@ -36,7 +37,7 @@ class _DymaTripState extends State<DymaTrip> {
           value: cityProvider,
         ),
         ChangeNotifierProvider.value(
-          value: TripProvider(),
+          value: tripProvider,
         ),
       ],
       child: MaterialApp(
