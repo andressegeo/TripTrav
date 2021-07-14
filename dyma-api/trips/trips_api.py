@@ -26,3 +26,13 @@ def create_trip(document):
     document["date"] = datetime.strptime(
         document["date"], "%Y-%m-%dT%H:%M:%S.%f")
     return db.trips.insert_one(document)
+
+
+def update_trip_by_id(trip_id, document):
+    """Update trip document in mongo database"""
+    document["date"] = datetime.strptime(
+        document["date"], "%Y-%m-%dT%H:%M:%S.%f")
+    return db.trips.update_one(
+        {"_id": ObjectId(trip_id)},
+        {"$set": document}
+    )

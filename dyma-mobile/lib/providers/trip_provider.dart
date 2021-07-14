@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:project_dyma_end/models/activity_model.dart';
@@ -57,8 +58,6 @@ class TripProvider with ChangeNotifier {
       );
 
       if (resp.statusCode == 201 || resp.statusCode == 200) {
-        print("state:");
-        print(json.decode(resp.body));
         _trips.add(
           Trip.fromJson(
             json.decode(resp.body),
@@ -73,11 +72,34 @@ class TripProvider with ChangeNotifier {
     }
   }
 
+  Future<void> updateTrip(Trip trip, String activityId) async {
+    try {
+      Activity activity =
+          trip.activities.firstWhere((activity) => activity.id == activityId);
+
+      activity.status = ActivityStatus.done;
+
+      http.Response resp = await http.put(
+        Uri.parse(
+          "$host/dyma-api/trips/${trip.id}",
+        ),
+        body: json.encode(
+          trip.toJson(),
+        ),
+        headers: {"Content-type": "application/json"},
+      );
+
+      if (resp.statusCode != 200) {
+        activity.status = ActivityStatus.ongoing;
+        throw HttpException("Error put trip");
+      }
+      notifyListeners();
+    } catch (e) {
+      print("error updateTrip");
+      rethrow;
+    }
+  }
+
   Trip getTripById(String tripId) =>
       trips.firstWhere((trip) => trip.id == tripId);
-
-  Future<void> setActivityToDone(Activity activity) {
-    activity.status = ActivityStatus.done;
-    notifyListeners();
-  }
 }

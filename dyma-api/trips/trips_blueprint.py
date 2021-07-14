@@ -12,7 +12,8 @@ from utils.flask_utils import (
 from trips.trips_api import (
     create_trip,
     get_trips,
-    find_trips_by_id
+    find_trips_by_id,
+    update_trip_by_id
 )
 
 trips_messages = {
@@ -103,7 +104,6 @@ def api_create_trip(payload):
     """
     # from IPython import embed
     # embed()
-    print(payload)
     logging.info(
         "[DEBUG ONLY] Operation to create trip in city: %s",
         payload.get("city")
@@ -131,4 +131,60 @@ def api_create_trip(payload):
         )
         return flask_constructor_error(
             message="error while creating trip resource"
+        )
+
+
+@trips_api_blueprint.route("/<string:trip_id>", methods=["PUT"])
+@flask_check_and_inject_payload()
+def api_update_trip(trip_id, payload):
+    """API PUT trip
+
+        Arguments:
+            trip_id(str): trip to update through his id
+            payload(orderedDict): request data to \
+                update trip from @flask_check_and_inject_payload_decorator
+        Returns:
+            Flask Response
+
+    """
+    # from IPython import embed
+    # embed()
+    print(payload)
+    logging.info(
+        "[DEBUG ONLY] Operation to update trip in city: %s",
+        payload.get("city")
+    )
+    try:
+        result = update_trip_by_id(
+            trip_id,
+            payload
+        )
+        if result.modified_count == 1:
+            # http status code 204,
+            # query successfully processed and no info to return
+            # from IPython import embed
+            # embed()
+            return flask_construct_response(
+                {
+                    "_id": trip_id,
+                    "city": payload["city"],
+                    "date": payload["date"],
+                    "activities": payload["activities"]
+                },
+                code=200
+            )
+        return flask_constructor_error(
+            message=trips_messages["trip_not_found"],
+            custom_error_code="WRONG_TRIP_ID_GIVEN",
+            status=404
+        )
+
+    except Exception as err:
+        logging.error(
+            "error while updating trip resource: %s -> %s",
+            err.__class__.__name__,
+            str(err)
+        )
+        return flask_constructor_error(
+            message="error while updating trip resource"
         )
