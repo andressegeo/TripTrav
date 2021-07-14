@@ -72,7 +72,7 @@ def api_get_all_cities():
         if not result:
             return flask_constructor_error(
                 message="not yet city registered for the moment",
-                status=404
+                status=204
             )
         return flask_construct_response(result)
 

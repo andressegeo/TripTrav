@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_dyma_end/providers/city_provider.dart';
-import 'package:project_dyma_end/providers/trip_provider.dart';
+import '../../providers/city_provider.dart';
+import '../../providers/trip_provider.dart';
+import '../../views/trip/widgets/trip_weather.dart';
 import 'package:provider/provider.dart';
 import '../../views/trip/widgets/trip_activities.dart';
 import '../../views/trip/widgets/trip_city_bar.dart';
@@ -24,7 +25,12 @@ class TripView extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TripCityBar(city: city),
+            TripCityBar(
+              city: city,
+            ),
+            TripWeather(
+              cityName: cityName,
+            ),
             TripActivities(
               tripId: tripId,
             ),
