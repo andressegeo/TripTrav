@@ -20,11 +20,22 @@ class Activity {
   });
 
   Activity.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
+      : id = json["_id"],
         name = json["name"],
         image = json["image"],
         city = json["city"],
         price = json["price"].toDouble(),
         status =
             json["status"] == 0 ? ActivityStatus.ongoing : ActivityStatus.done;
+
+  Map<String, dynamic> toJson() {
+    return {
+      "_id": id,
+      "name": name,
+      "image": image,
+      "city": city,
+      "price": price,
+      "status": status == ActivityStatus.ongoing ? 0 : 1
+    };
+  }
 }

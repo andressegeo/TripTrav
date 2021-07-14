@@ -8,6 +8,7 @@ from utils.flask_utils import (
 )
 
 from cities.cities_blueprint import cities_api_blueprint
+from trips.trips_blueprint import trips_api_blueprint
 
 config = configparser.ConfigParser()
 config.read(os.path.abspath(os.path.join(".ini")))
@@ -18,6 +19,11 @@ app.json_encoder = MongoJsonEncoder
 app.register_blueprint(
     cities_api_blueprint,
     url_prefix="/dyma-api/cities"
+)
+
+app.register_blueprint(
+    trips_api_blueprint,
+    url_prefix="/dyma-api/trips"
 )
 
 if __name__ == "__main__":

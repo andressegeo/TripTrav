@@ -14,11 +14,10 @@ class Trip {
     @required this.city,
     @required this.activities,
     @required this.date,
-    @required this.id,
   });
 
   Trip.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
+      : id = json["_id"],
         city = json["city"],
         date = DateTime.parse(json["date"]),
         activities = (json["activities"] as List)
@@ -26,4 +25,16 @@ class Trip {
               (activityJson) => Activity.fromJson(activityJson),
             )
             .toList();
+  Map<String, dynamic> toJson() {
+    return {
+      // "_id": id,
+      "city": city,
+      "date": date.toIso8601String(), // convert datetime to string
+      "activities": activities
+          .map(
+            (activity) => activity.toJson(),
+          )
+          .toList()
+    };
+  }
 }

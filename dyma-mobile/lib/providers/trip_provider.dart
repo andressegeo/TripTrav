@@ -16,19 +16,6 @@ class TripProvider with ChangeNotifier {
     return UnmodifiableListView(_trips);
   }
 
-  void addTrip(Trip trip) {
-    _trips.add(trip);
-    notifyListeners();
-  }
-
-  Trip getTripById(String tripId) =>
-      trips.firstWhere((trip) => trip.id == tripId);
-
-  void setActivityToDone(Activity activity) {
-    activity.status = ActivityStatus.done;
-    notifyListeners();
-  }
-
   Future<void> fetchData() async {
     try {
       isLoading = true;
@@ -48,11 +35,49 @@ class TripProvider with ChangeNotifier {
         print("trip status");
         print(resp.statusCode);
         isLoading = false;
+        notifyListeners();
       }
     } catch (e) {
       print("errorTrip fetch");
       isLoading = false;
       rethrow;
     }
+  }
+
+  Future<void> addTrip(Trip trip) async {
+    try {
+      http.Response resp = await http.post(
+        Uri.parse(
+          "$host/dyma-api/trips/",
+        ),
+        body: json.encode(
+          trip.toJson(),
+        ),
+        headers: {"Content-type": "application/json"},
+      );
+
+      if (resp.statusCode == 201 || resp.statusCode == 200) {
+        print("state:");
+        print(json.decode(resp.body));
+        _trips.add(
+          Trip.fromJson(
+            json.decode(resp.body),
+          ),
+        );
+      }
+      notifyListeners();
+    } catch (e) {
+      print("addTrip error");
+      print(e);
+      rethrow;
+    }
+  }
+
+  Trip getTripById(String tripId) =>
+      trips.firstWhere((trip) => trip.id == tripId);
+
+  Future<void> setActivityToDone(Activity activity) {
+    activity.status = ActivityStatus.done;
+    notifyListeners();
   }
 }

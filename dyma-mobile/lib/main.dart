@@ -22,6 +22,7 @@ class DymaTrip extends StatefulWidget {
 class _DymaTripState extends State<DymaTrip> {
   final CityProvider cityProvider = CityProvider();
   final TripProvider tripProvider = TripProvider();
+
   @override
   void initState() {
     cityProvider.fetchData();
