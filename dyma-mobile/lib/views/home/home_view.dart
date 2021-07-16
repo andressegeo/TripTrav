@@ -54,7 +54,6 @@ class _HomeState extends State<HomeView> {
   Widget build(BuildContext context) {
     List<City> filteredCities = Provider.of<CityProvider>(context)
         .getFilteredCities(searchController.text);
-    print(filteredCities.toList());
     return Scaffold(
       appBar: AppBar(
         // leading: Icon(Icons.home),
