@@ -10,28 +10,38 @@ class ActivityForm extends StatefulWidget {
 }
 
 class _ActivityFormState extends State<ActivityForm> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  FocusNode _priceFocusNode;
+  FocusNode _urlFocusNode;
   FormState get form {
-    return formKey.currentState;
+    return _formKey.currentState;
   }
 
-  Activity newActivity;
+  Activity _newActivity;
 
   @override
   void initState() {
-    newActivity = Activity(
+    _newActivity = Activity(
       name: null,
       price: 0,
       image: null,
       city: widget.cityName,
       status: ActivityStatus.ongoing,
     );
+    _priceFocusNode = FocusNode();
+    _urlFocusNode = FocusNode();
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _priceFocusNode.dispose();
+    _urlFocusNode.dispose();
+    super.dispose();
+  }
+
   void submitForm() {
-    print(newActivity.toJson());
+    print(_newActivity.toJson());
     if (form.validate()) {
       form.save();
     } else {
@@ -44,18 +54,23 @@ class _ActivityFormState extends State<ActivityForm> {
     return Container(
       padding: EdgeInsets.all(15),
       child: Form(
-        key: formKey,
+        key: _formKey,
         child: Column(
           children: [
             TextFormField(
+              autofocus: true,
               validator: (value) {
                 if (value.isEmpty) return "Remplissez le Nom";
                 return null;
               },
+              textInputAction: TextInputAction.next,
               decoration: InputDecoration(
-                hintText: "Nom",
+                labelText: "Nom",
               ),
-              onSaved: (value) => newActivity.name = value,
+              onSaved: (value) => _newActivity.name = value,
+              onFieldSubmitted: (_) {
+                FocusScope.of(context).requestFocus(_priceFocusNode);
+              },
             ),
             SizedBox(
               height: 10,
@@ -66,10 +81,15 @@ class _ActivityFormState extends State<ActivityForm> {
                 if (value.isEmpty) return "Remplissez le Prix";
                 return null;
               },
+              textInputAction: TextInputAction.next,
+              focusNode: _priceFocusNode,
               decoration: InputDecoration(
-                hintText: "Prix",
+                labelText: "Prix",
               ),
-              onSaved: (value) => newActivity.price = double.parse(value),
+              onSaved: (value) => _newActivity.price = double.parse(value),
+              onFieldSubmitted: (_) {
+                FocusScope.of(context).requestFocus(_urlFocusNode);
+              },
             ),
             SizedBox(
               height: 10,
@@ -80,10 +100,12 @@ class _ActivityFormState extends State<ActivityForm> {
                 if (value.isEmpty) return "Remplissez l'Url ";
                 return null;
               },
+              focusNode: _urlFocusNode,
               decoration: InputDecoration(
                 hintText: "Url Image",
               ),
-              onSaved: (value) => newActivity.image = value,
+              onSaved: (value) => _newActivity.image = value,
+              onFieldSubmitted: (_) => submitForm(),
             ),
             SizedBox(
               height: 10,
