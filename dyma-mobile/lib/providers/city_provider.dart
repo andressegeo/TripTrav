@@ -19,6 +19,17 @@ class CityProvider with ChangeNotifier {
   City getCityByName(String cityName) =>
       cities.firstWhere((city) => city.name == cityName);
 
+  UnmodifiableListView<City> getFilteredCities(String filter) =>
+      UnmodifiableListView(
+        _cities
+            .where(
+              (city) => city.name.toLowerCase().startsWith(
+                    filter.toLowerCase(),
+                  ),
+            )
+            .toList(),
+      );
+
   Future<void> fetchData() async {
     try {
       isLoading = true;

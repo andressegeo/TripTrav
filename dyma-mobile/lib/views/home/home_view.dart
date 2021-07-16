@@ -19,6 +19,23 @@ class _HomeState extends State<HomeView> {
   TextEditingController searchController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    searchController.addListener(() {
+      setState(
+          () {}); // Le setState va rebuilder à chaque fois qu'on rentre un mot dans le textField
+      // le listener sur le field permet donc de l'écouter et de rebuilder le widget
+    });
+  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   searchController.addListener(() {
+  //     setState(() {});
+  //   });
+  // }
+
+  @override
   dispose() {
     searchController
         .dispose(); // libérer les ressources when _HomeState est détruit
@@ -35,7 +52,9 @@ class _HomeState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    List<City> cities = Provider.of<CityProvider>(context).cities;
+    List<City> filteredCities = Provider.of<CityProvider>(context)
+        .getFilteredCities(searchController.text);
+    print(filteredCities.toList());
     return Scaffold(
       appBar: AppBar(
         // leading: Icon(Icons.home),
@@ -59,11 +78,21 @@ class _HomeState extends State<HomeView> {
                       prefixIcon: Icon(Icons.search),
                     ),
                     controller: searchController,
+
+                    // onSubmitted will help if we just call the back after click on enter button
+                    // In oposite, we have to declare initState who help to rebuil automaticaly after hitting a word on a textField
+                    // To conclude for doing autocompletion instantanely, use initState, otherwise, use onSubmitted
+                    // onSubmitted: (value) {
+                    //   print(value);
+                    //   setState(() {});
+                    // },
                   ),
                 ),
                 IconButton(
                   icon: Icon(Icons.clear),
-                  onPressed: () => print("object"),
+                  onPressed: () {
+                    setState(() => searchController.clear());
+                  },
                 )
               ],
             ),
@@ -71,13 +100,13 @@ class _HomeState extends State<HomeView> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(10),
-              child: cities.length > 0
+              child: filteredCities.length > 0
                   ? RefreshIndicator(
                       onRefresh: Provider.of<CityProvider>(context).fetchData,
                       child: ListView.builder(
-                        itemCount: cities.length,
+                        itemCount: filteredCities.length,
                         itemBuilder: (_, i) => CityCard(
-                          city: cities[i],
+                          city: filteredCities[i],
                         ),
                       ),
                     )
