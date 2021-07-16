@@ -6,12 +6,13 @@ class ActivityFormView extends StatelessWidget {
   static const String routeName = "/activity-form";
   @override
   Widget build(BuildContext context) {
+    String cityName = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text("Ajouter une activité"),
       ),
       drawer: DymaDrawer(),
-      body: ActivityForm(),
+      body: ActivityForm(cityName: cityName),
     );
   }
 }

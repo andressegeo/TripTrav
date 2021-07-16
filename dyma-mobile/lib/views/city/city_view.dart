@@ -185,6 +185,7 @@ class _CityState extends State<CityView> {
                 Navigator.pushNamed(
                   context,
                   "/activity-form",
+                  arguments: cityName,
                 );
               })
         ],
