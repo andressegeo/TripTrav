@@ -19,3 +19,15 @@ def find_cities_by_id(city_id):
             "_id": ObjectId(city_id)
         }
     )
+
+
+def update_activities_on_city_by_id(city_id, payload):
+    """Update activities on city document in mongo database"""
+    return db.cities.update_one(
+        {"_id": ObjectId(city_id)},
+        {
+            "$addToSet": {
+                "activities": payload
+            }
+        }
+    )

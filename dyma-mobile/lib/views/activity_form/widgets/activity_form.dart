@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project_dyma_end/models/activity_model.dart';
+import 'package:project_dyma_end/providers/city_provider.dart';
+import 'package:provider/provider.dart';
 
 class ActivityForm extends StatefulWidget {
   final String cityName;
 
-  ActivityForm({this.cityName});
+  ActivityForm({@required this.cityName});
   @override
   _ActivityFormState createState() => _ActivityFormState();
 }
@@ -13,19 +15,19 @@ class _ActivityFormState extends State<ActivityForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FocusNode _priceFocusNode;
   FocusNode _urlFocusNode;
+  Activity _newActivity;
+  bool _isLoading = false;
   FormState get form {
     return _formKey.currentState;
   }
 
-  Activity _newActivity;
-
   @override
   void initState() {
     _newActivity = Activity(
-      name: null,
-      price: 0,
-      image: null,
       city: widget.cityName,
+      name: "",
+      price: 0,
+      image: "",
       status: ActivityStatus.ongoing,
     );
     _priceFocusNode = FocusNode();
@@ -40,12 +42,27 @@ class _ActivityFormState extends State<ActivityForm> {
     super.dispose();
   }
 
-  void submitForm() {
-    print(_newActivity.toJson());
-    if (form.validate()) {
-      form.save();
-    } else {
-      print("error");
+  Future<void> submitForm() async {
+    try {
+      CityProvider cityProvider = Provider.of<CityProvider>(
+        context,
+        listen: false,
+      );
+      form.validate();
+      if (form.validate()) {
+        _formKey.currentState.save();
+        setState(() {
+          _isLoading = true;
+        });
+        await cityProvider.addActivityToCity(_newActivity);
+        Navigator.pop(context);
+      } else {
+        setState(() => _isLoading = false);
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -86,7 +103,9 @@ class _ActivityFormState extends State<ActivityForm> {
               decoration: InputDecoration(
                 labelText: "Prix",
               ),
-              onSaved: (value) => _newActivity.price = double.parse(value),
+              onSaved: (value) {
+                _newActivity.price = double.parse(value);
+              },
               onFieldSubmitted: (_) {
                 FocusScope.of(context).requestFocus(_urlFocusNode);
               },
@@ -104,8 +123,9 @@ class _ActivityFormState extends State<ActivityForm> {
               decoration: InputDecoration(
                 hintText: "Url Image",
               ),
-              onSaved: (value) => _newActivity.image = value,
-              onFieldSubmitted: (_) => submitForm(),
+              onSaved: (value) {
+                _newActivity.image = value;
+              },
             ),
             SizedBox(
               height: 10,
@@ -121,7 +141,7 @@ class _ActivityFormState extends State<ActivityForm> {
                 ),
                 ElevatedButton(
                   child: Text("Sauvergarder"),
-                  onPressed: submitForm,
+                  onPressed: _isLoading ? null : submitForm,
                 )
               ],
             )

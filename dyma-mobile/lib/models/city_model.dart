@@ -16,7 +16,7 @@ class City {
   });
 
   City.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
+      : id = json["_id"],
         image = json["image"],
         name = json["name"],
         activities = (json["activities"] as List)
