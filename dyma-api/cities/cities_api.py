@@ -31,3 +31,16 @@ def update_activities_on_city_by_id(city_id, payload):
             }
         }
     )
+
+
+def check_if_activity_already_exist(city_id, activity_name):
+    return db.cities.find(
+        {
+            "_id": ObjectId(city_id),
+            "activities": {
+                "$elemMatch": {
+                    "name": activity_name
+                }
+            }
+        }
+    ).count()

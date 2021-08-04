@@ -65,6 +65,24 @@ class CityProvider with ChangeNotifier {
     }
   }
 
+  Future<dynamic> verifyIfActivityNameIsUnique(
+      String cityName, String activityName) async {
+    try {
+      City city = getCityByName(cityName);
+      http.Response resp = await http.get(
+        // Uri.parse("http://10.0.2.2:5000/dyma-api/cities/"),
+        Uri.parse(
+            "$host/dyma-api/cities/${city.id}/activities/verify/$activityName"),
+      );
+      if (resp.body != null) {
+        var bodyJson = json.decode(resp.body);
+        return bodyJson;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> fetchData() async {
     try {
       isLoading = true;

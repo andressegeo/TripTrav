@@ -1,7 +1,7 @@
 """Cities Blueprint Operations."""
 
 import logging
-from flask import Blueprint
+from flask import Blueprint, json, jsonify
 from bson import ObjectId
 from utils.flask_utils import (
     flask_construct_response,
@@ -12,7 +12,8 @@ from utils.flask_utils import (
 from cities.cities_api import (
     get_cities,
     find_cities_by_id,
-    update_activities_on_city_by_id
+    update_activities_on_city_by_id,
+    check_if_activity_already_exist
 )
 
 cities_messages = {
@@ -138,4 +139,24 @@ def api_update_activities_on_city(city_id, payload):
         )
         return flask_constructor_error(
             message="error while updating city resource"
+        )
+
+
+@cities_api_blueprint.route("/<string:city_id>/activities/verify/<string:activity_name>")
+def verify_activity_is_unique(city_id, activity_name):
+    try:
+        result = check_if_activity_already_exist(city_id, activity_name)
+        print(result)
+        if result >= 1:
+            return jsonify("l'activité existe deja")
+        else:
+            return jsonify("OK")
+    except Exception as err:
+        logging.error(
+            "error while checking activity name: %s -> %s",
+            err.__class__.__name__,
+            str(err)
+        )
+        return flask_constructor_error(
+            message="error while checking activity name"
         )

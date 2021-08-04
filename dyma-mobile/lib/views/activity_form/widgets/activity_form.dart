@@ -16,6 +16,7 @@ class _ActivityFormState extends State<ActivityForm> {
   FocusNode _priceFocusNode;
   FocusNode _urlFocusNode;
   Activity _newActivity;
+  String _nameInputAsync;
   bool _isLoading = false;
   FormState get form {
     return _formKey.currentState;
@@ -48,15 +49,18 @@ class _ActivityFormState extends State<ActivityForm> {
         context,
         listen: false,
       );
-      form.validate();
+      _formKey.currentState.save();
+      setState(() => _isLoading = true);
+      _nameInputAsync = await cityProvider.verifyIfActivityNameIsUnique(
+        widget.cityName,
+        _newActivity.name,
+      );
       if (form.validate()) {
-        _formKey.currentState.save();
-        setState(() {
-          _isLoading = true;
-        });
+        print("form validate begin");
         await cityProvider.addActivityToCity(_newActivity);
         Navigator.pop(context);
       } else {
+        print("else form val");
         setState(() => _isLoading = false);
       }
     } catch (e) {
@@ -77,7 +81,11 @@ class _ActivityFormState extends State<ActivityForm> {
             TextFormField(
               autofocus: true,
               validator: (value) {
-                if (value.isEmpty) return "Remplissez le Nom";
+                if (value == null || value.isEmpty) {
+                  return "Remplissez le Nom";
+                } else if (_nameInputAsync != "OK") {
+                  return _nameInputAsync;
+                }
                 return null;
               },
               textInputAction: TextInputAction.next,
@@ -141,7 +149,9 @@ class _ActivityFormState extends State<ActivityForm> {
                 ),
                 ElevatedButton(
                   child: Text("Sauvergarder"),
-                  onPressed: _isLoading ? null : submitForm,
+                  onPressed: _isLoading
+                      ? null
+                      : submitForm, // Si ça load, on return null, else on submit
                 )
               ],
             )
