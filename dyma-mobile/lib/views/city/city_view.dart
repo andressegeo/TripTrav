@@ -178,6 +178,17 @@ class _CityState extends State<CityView> {
         //   onPressed: () => Navigator.pop(context),
         // ),
         title: const Text("Organisation Voyage"),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  "/activity-form",
+                  arguments: cityName,
+                );
+              })
+        ],
       ),
       drawer: const DymaDrawer(),
       body: Container(
