@@ -15,24 +15,26 @@ class CityCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Ink.image(
-              // Le ink ici permet d'appeler le InkWell qui lui va aider à
-              // faire ressortir la sensation(la vaguelette) de Tap sur l'image
-              // image: AssetImage(city.image),
-              image: NetworkImage(city.image),
-              fit: BoxFit.cover,
-              child: InkWell(
-                onTap: () {
-                  // pushNamed va pousser via la route à trigger le widget à stacker en haut de la pile
-                  // via pushNamed on peut envoyer des arguments à la view pushé en exploitant la propriété argument
-                  // la recuperation de l'enfant se fera via la classe ModalRoute
-                  // ModalRoute.of(context).settings.arguments;
-                  Navigator.pushNamed(
-                    context,
-                    "/city", // If we passed and unknowRoute(/qsdqlsdj for e.g), it will call not_found view on 404 folder
-                    arguments: city.name,
-                  );
-                },
+            // Permet de detecter des events que fait un user sur son tel
+            // Zoomer avec ses 2 doigts, doubleTap, Tap, Press, le Gesture permet de le savoir
+            GestureDetector(
+              onTap: () {
+                // pushNamed va pousser via la route à trigger le widget à stacker en haut de la pile
+                // via pushNamed on peut envoyer des arguments à la view pushé en exploitant la propriété argument
+                // la recuperation de l'enfant se fera via la classe ModalRoute
+                // ModalRoute.of(context).settings.arguments;
+                Navigator.pushNamed(
+                  context,
+                  "/city", // If we passed and unknowRoute(/qsdqlsdj for e.g), it will call not_found view on 404 folder
+                  arguments: city.name,
+                );
+              },
+              child: Hero(
+                tag: city.name,
+                child: Image.network(
+                  city.image,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Positioned(

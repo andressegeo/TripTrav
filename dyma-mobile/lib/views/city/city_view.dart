@@ -200,6 +200,7 @@ class _CityState extends State<CityView> {
               setDate: setDate,
               trip: myTrip,
               cityName: city.name,
+              cityImage: city.image,
               amount: amount,
             ),
             Expanded(
