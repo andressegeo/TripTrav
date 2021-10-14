@@ -1,5 +1,6 @@
 import os
 import configparser
+import sys
 
 from flask.app import Flask
 from utils.flask_utils import (
@@ -26,11 +27,17 @@ app.register_blueprint(
     url_prefix="/dyma-api/trips"
 )
 
+try:
+    import googleclouddebugger
+    googleclouddebugger.enable(
+        breakpoint_enable_canary=True
+    )
+except:
+    for e in sys.exc_info():
+        print(e)
+
 if __name__ == "__main__":
     app.config['DEBUG'] = True
-    app.config['DYMA_DB_URI'] = config['PROD']['DYMA_DB_URI']
-    app.config['DYMA_DB_NAME'] = config['PROD']['DYMA_DB_NAME']
-    app.config['SECRET_KEY'] = config['PROD']['SECRET_KEY']
 
     @app.errorhandler(403)
     def user_forbidden(err):

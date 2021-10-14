@@ -104,7 +104,6 @@ def api_update_activities_on_city(city_id, payload):
 
     """
     payload["_id"] = ObjectId()
-    print(payload)
     logging.info(
         "[DEBUG ONLY] Operation to update activities on city: %s",
         payload.get("city_id")

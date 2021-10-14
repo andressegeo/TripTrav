@@ -147,9 +147,6 @@ def api_update_trip(trip_id, payload):
             Flask Response
 
     """
-    # from IPython import embed
-    # embed()
-    print(payload)
     logging.info(
         "[DEBUG ONLY] Operation to update trip in city: %s",
         payload.get("city")
