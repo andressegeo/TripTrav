@@ -1,0 +1,8 @@
+dispatch:
+  # Send all api calls to the api service.
+  - url: "*/api/*"
+    service: default
+
+  # Default service serves simple hostname request the typical web resources and all static resources.
+  - url: "*/*"
+    service: default
