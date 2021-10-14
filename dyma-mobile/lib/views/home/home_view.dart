@@ -60,7 +60,7 @@ class _HomeState extends State<HomeView> {
         title: const Text("DymaTrip"),
         actions: [Icon(Icons.more_vert)],
       ),
-      drawer: const DymaDrawer(),
+      drawer: const DymaDrawer(), // (Tiroir) por le menu coulissant de gauche
       body: Column(
         children: [
           Container(
@@ -73,7 +73,7 @@ class _HomeState extends State<HomeView> {
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: "Rechercher une ville", // Placeholder
+                      hintText: "Rechercher une ville...", // Placeholder
                       prefixIcon: Icon(Icons.search),
                     ),
                     controller: searchController,

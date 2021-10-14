@@ -9,7 +9,9 @@ import "dart:convert";
 import '../models/city_model.dart';
 
 class CityProvider with ChangeNotifier {
-  final String host = "http://localhost:5000";
+  // final String host = "http://localhost:5000";
+  final String host = "http://dymatrip-dev.appspot.com/";
+
   bool isLoading = false;
   List<City> _cities = [];
   // UnmodifiableListView coe son nom l'indique, va bloquer toute tentative
