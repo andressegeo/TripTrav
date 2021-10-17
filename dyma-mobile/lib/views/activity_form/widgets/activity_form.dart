@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:project_dyma_end/models/activity_model.dart';
 import 'package:project_dyma_end/providers/city_provider.dart';
+import 'package:project_dyma_end/views/activity_form/widgets/activity_form_image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ActivityForm extends StatefulWidget {
@@ -135,7 +136,7 @@ class _ActivityFormState extends State<ActivityForm> {
               onSaved: (value) => _newActivity.price = double.parse(value!),
             ),
             SizedBox(
-              height: 10,
+              height: 30,
             ),
             TextFormField(
               keyboardType: TextInputType.url,
@@ -153,6 +154,10 @@ class _ActivityFormState extends State<ActivityForm> {
             ),
             SizedBox(
               height: 10,
+            ),
+            ActivityFormImagePicker(),
+            SizedBox(
+              height: 30,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

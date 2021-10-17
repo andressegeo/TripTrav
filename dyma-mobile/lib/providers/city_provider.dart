@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import "dart:convert";
 
 class CityProvider with ChangeNotifier {
-  final String host = "http://localhost:5000";
-  // final String host = "http://dymatrip-dev.appspot.com/";
+  // final String host = "http://localhost:5000";
+  final String host = "http://dymatrip-dev.appspot.com/";
 
   bool isLoading = false;
   List<City> _cities = [];

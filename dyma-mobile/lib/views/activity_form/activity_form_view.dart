@@ -14,7 +14,9 @@ class ActivityFormView extends StatelessWidget {
         title: Text("Ajouter une activité"),
       ),
       drawer: const DymaDrawer(),
-      body: ActivityForm(cityName: cityName),
+      body: SingleChildScrollView(
+        child: ActivityForm(cityName: cityName),
+      ),
     );
   }
 }
