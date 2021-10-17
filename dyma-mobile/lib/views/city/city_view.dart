@@ -19,23 +19,23 @@ class CityView extends StatefulWidget {
   @override
   _CityState createState() => _CityState();
 
-  showContext({BuildContext context, List<Widget> children}) {
+  showContext({required BuildContext context, List<Widget>? children}) {
     Orientation orientation = MediaQuery.of(context).orientation;
     if (orientation == Orientation.landscape) {
       return Row(
         // Stretch pour que ça prenne toute la hauteur si on est en mode landscape
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: children,
+        children: children!,
       );
     } else {
-      return Column(children: children);
+      return Column(children: children!);
     }
   }
 }
 
 class _CityState extends State<CityView> {
-  Trip myTrip;
-  int index;
+  Trip? myTrip;
+  int? index;
 
   @override
   void initState() {
@@ -50,10 +50,10 @@ class _CityState extends State<CityView> {
 
   // Combiner en addition les amounts quand on selectionne dans la cityView
   double get amount {
-    return myTrip.activities.fold(
+    return myTrip!.activities.fold(
       0.00,
       (previousValue, element) {
-        return previousValue + element.price;
+        return previousValue + element.price!;
       },
     );
   }
@@ -69,10 +69,10 @@ class _CityState extends State<CityView> {
         if (newDate != null) {
           setState(
             () {
-              myTrip.date = newDate;
+              myTrip!.date = newDate;
             },
           );
-          print("new date set: ${myTrip.date}");
+          print("new date set: ${myTrip!.date}");
         }
       },
     );
@@ -87,22 +87,23 @@ class _CityState extends State<CityView> {
   void toggleActivity(Activity activity) {
     setState(
       () {
-        myTrip.activities.contains(activity)
-            ? myTrip.activities.remove(activity)
-            : myTrip.activities.add(activity);
+        myTrip!.activities.contains(activity)
+            ? myTrip!.activities.remove(activity)
+            : myTrip!.activities.add(activity);
       },
     );
   }
 
   void deleteTripActivity(Activity activity) {
+    print("hooho");
     setState(() {
-      if (myTrip.activities.contains(activity)) {
-        myTrip.activities.remove(activity);
+      if (myTrip!.activities.contains(activity)) {
+        myTrip!.activities.remove(activity);
       }
     });
   }
 
-  void saveTrip(String cityName) async {
+  void saveTrip(String? cityName) async {
     var result = await showDialog(
       context: context,
       builder: (context) {
@@ -141,7 +142,7 @@ class _CityState extends State<CityView> {
       },
     );
 
-    if (myTrip.date == null) {
+    if (myTrip!.date == null) {
       print("date null");
       showDialog(
           context: context,
@@ -161,15 +162,15 @@ class _CityState extends State<CityView> {
           });
     } else if (result == "save") {
       // widget.addTrip(myTrip);
-      myTrip.city = cityName;
-      Provider.of<TripProvider>(context, listen: false).addTrip(myTrip);
+      myTrip!.city = cityName;
+      Provider.of<TripProvider>(context, listen: false).addTrip(myTrip!);
       Navigator.pushNamed(context, HomeView.routeName);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    String cityName = ModalRoute.of(context).settings.arguments;
+    String? cityName = ModalRoute.of(context)!.settings.arguments as String?;
     City city = Provider.of<CityProvider>(context).getCityByName(cityName);
     return Scaffold(
       appBar: AppBar(
@@ -207,11 +208,11 @@ class _CityState extends State<CityView> {
               child: index == 0
                   ? ActivityList(
                       activities: city.activities,
-                      selectedActivities: myTrip.activities,
+                      selectedActivities: myTrip!.activities,
                       toggleActivity: toggleActivity,
                     )
                   : TripActivityList(
-                      activities: myTrip.activities,
+                      activities: myTrip!.activities,
                       deleteTripActivity: deleteTripActivity,
                     ),
             )
@@ -227,7 +228,7 @@ class _CityState extends State<CityView> {
         foregroundColor: Colors.white,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index,
+        currentIndex: index!,
         items: [
           const BottomNavigationBarItem(
             icon: const Icon(Icons.map),

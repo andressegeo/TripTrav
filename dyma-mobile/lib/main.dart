@@ -47,13 +47,13 @@ class _DymaTripState extends State<DymaTrip> {
           // primarySwatch: Colors.red,
           // accentColor: Colors.green,
           appBarTheme: AppBarTheme(
-            // definition d'un theme pour le texte dans nos AppBar
-            // en copiant les memes valeurs d'autres features mais en modifiant juste le fontSize du texte
-            textTheme: ThemeData.light().textTheme.copyWith(
-                  // use headline6 instead title who's deprecated
-                  headline6: TextStyle(fontSize: 30),
-                ),
-          ),
+              // definition d'un theme pour le texte dans nos AppBar
+              // en copiant les memes valeurs d'autres features mais en modifiant juste le fontSize du texte
+              // textTheme: ThemeData.light().textTheme.copyWith(
+              //       // use headline6 instead title who's deprecated
+              //       headline6: TextStyle(fontSize: 30),
+              //     ),
+              ),
           // definition d'un textTheme generique(pas qu'à l'AppBAr)
           // Pour l'utiliser dans un composant, exploiter l'inheritedWidget qu'est theme
           // dans le widget enfant puis appeler la propriété headline6

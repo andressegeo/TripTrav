@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../models/city_model.dart';
 
 class TripCityBar extends StatelessWidget {
-  final City city;
-  const TripCityBar({Key key, this.city}) : super(key: key);
+  final City? city;
+  const TripCityBar({Key? key, this.city}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class TripCityBar extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Image.network(
-            city.image,
+            city!.image!,
             fit: BoxFit.cover,
           ),
           Container(
@@ -40,7 +40,7 @@ class TripCityBar extends StatelessWidget {
                 Expanded(
                   child: Center(
                     child: Text(
-                      city.name,
+                      city!.name!,
                       style: TextStyle(
                         fontSize: 30,
                         color: Colors.white,

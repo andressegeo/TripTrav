@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TripOverviewCity extends StatelessWidget {
-  final String cityName;
-  final String cityImage;
+  final String? cityName;
+  final String? cityImage;
   TripOverviewCity({this.cityName, this.cityImage});
 
   @override
@@ -14,9 +14,9 @@ class TripOverviewCity extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Hero(
-            tag: cityName,
+            tag: cityName!,
             child: Image.network(
-              cityImage,
+              cityImage!,
               fit: BoxFit.cover,
             ),
           ),
@@ -25,7 +25,7 @@ class TripOverviewCity extends StatelessWidget {
           ),
           Center(
             child: Text(
-              cityName,
+              cityName!,
               style: const TextStyle(
                 fontSize: 25,
                 color: Colors.white,

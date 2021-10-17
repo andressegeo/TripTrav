@@ -3,9 +3,9 @@ import '../../../models/activity_model.dart';
 import '../../city/widgets/activity_card.dart';
 
 class ActivityList extends StatelessWidget {
-  final List<Activity> activities;
-  final List<Activity> selectedActivities;
-  final Function toggleActivity;
+  final List<Activity>? activities;
+  final List<Activity>? selectedActivities;
+  final Function? toggleActivity;
 
   const ActivityList({
     this.activities,
@@ -20,13 +20,13 @@ class ActivityList extends StatelessWidget {
       crossAxisSpacing: 1,
       // crossAxisCount nbre d'élmt par ligne
       crossAxisCount: 2,
-      children: activities
+      children: activities!
           .map(
             (activity) => ActivityCard(
               activity: activity,
-              isSelected: selectedActivities.contains(activity),
+              isSelected: selectedActivities!.contains(activity),
               toggleActivity: () {
-                toggleActivity(activity);
+                toggleActivity!(activity);
               },
             ),
           )

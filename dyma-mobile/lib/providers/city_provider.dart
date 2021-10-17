@@ -6,11 +6,9 @@ import '../models/city_model.dart';
 import 'package:http/http.dart' as http;
 import "dart:convert";
 
-import '../models/city_model.dart';
-
 class CityProvider with ChangeNotifier {
-  // final String host = "http://localhost:5000";
-  final String host = "http://dymatrip-dev.appspot.com/";
+  final String host = "http://localhost:5000";
+  // final String host = "http://dymatrip-dev.appspot.com/";
 
   bool isLoading = false;
   List<City> _cities = [];
@@ -20,7 +18,7 @@ class CityProvider with ChangeNotifier {
     return UnmodifiableListView(_cities);
   }
 
-  City getCityByName(String cityName) {
+  City getCityByName(String? cityName) {
     return cities.firstWhere((city) => city.name == cityName);
   }
 
@@ -28,7 +26,7 @@ class CityProvider with ChangeNotifier {
       UnmodifiableListView(
         _cities
             .where(
-              (city) => city.name.toLowerCase().startsWith(
+              (city) => city.name!.toLowerCase().startsWith(
                     filter.toLowerCase(),
                   ),
             )
@@ -37,7 +35,7 @@ class CityProvider with ChangeNotifier {
 
   Future<void> addActivityToCity(Activity newActivity) async {
     try {
-      String cityId = getCityByName(newActivity.city).id;
+      String? cityId = getCityByName(newActivity.city).id;
       http.Response resp = await http.put(
         Uri.parse(
           "$host/dyma-api/cities/$cityId",
@@ -68,15 +66,20 @@ class CityProvider with ChangeNotifier {
   }
 
   Future<dynamic> verifyIfActivityNameIsUnique(
-      String cityName, String activityName) async {
+    String cityName,
+    String activityName,
+  ) async {
     try {
+      print("moonwalk");
       City city = getCityByName(cityName);
       http.Response resp = await http.get(
+        // TO make works in android simulator, use this uri
         // Uri.parse("http://10.0.2.2:5000/dyma-api/cities/"),
         Uri.parse(
             "$host/dyma-api/cities/${city.id}/activities/verify/$activityName"),
       );
-      if (resp.body != null) {
+      print("resp: ${resp.statusCode}");
+      if (resp.statusCode != 200) {
         var bodyJson = json.decode(resp.body);
         return bodyJson;
       }

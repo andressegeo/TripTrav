@@ -3,9 +3,9 @@ import '../../../models/activity_model.dart';
 import '../../../views/trip/widgets/trip_activity_list.dart';
 
 class TripActivities extends StatelessWidget {
-  final String tripId;
+  final String? tripId;
 
-  const TripActivities({Key key, this.tripId}) : super(key: key);
+  const TripActivities({Key? key, this.tripId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

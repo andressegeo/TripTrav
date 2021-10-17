@@ -4,11 +4,11 @@ import 'package:project_dyma_end/views/city/widgets/trip_overview_city.dart';
 import '../../../models/trip_model.dart';
 
 class TripOverView extends StatelessWidget {
-  final String cityName;
-  final String cityImage;
-  final Function setDate;
-  final Trip trip;
-  final double amount;
+  final String? cityName;
+  final String? cityImage;
+  final Function? setDate;
+  final Trip? trip;
+  final double? amount;
 
   const TripOverView({
     this.cityName,
@@ -44,15 +44,15 @@ class TripOverView extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    trip.date != null
-                        ? DateFormat("d/M/y").format(trip.date)
+                    trip!.date != null
+                        ? DateFormat("d/M/y").format(trip!.date!)
                         : "Choisissez une date",
                     style: const TextStyle(fontSize: 20),
                   ),
                 ),
                 ElevatedButton(
                   child: const Text("Selectionner une date"),
-                  onPressed: setDate,
+                  onPressed: setDate as void Function()?,
                 )
               ],
             ),
