@@ -8,7 +8,7 @@ class Data extends InheritedWidget {
   // et de toujours passer systematiquement une function du parent aux enfant qui persiste la données
   final List<City> activities = [];
 
-  Data({Widget child}) : super(child: child);
+  Data({required Widget child}) : super(child: child);
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Future<String> askModal(BuildContext context, String question) {
+Future<String?> askModal(BuildContext context, String question) {
   return Navigator.push(
     // On push un widget sur le top de notre Stack
     context,
@@ -18,7 +18,7 @@ Future<String> askModal(BuildContext context, String question) {
 }
 
 class AskModal extends StatelessWidget {
-  final String question;
+  final String? question;
   AskModal({this.question});
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class AskModal extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(question),
+              Text(question!),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

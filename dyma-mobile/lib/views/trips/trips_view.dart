@@ -2,10 +2,8 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 import '../../providers/trip_provider.dart';
-import '../../providers/trip_provider.dart';
 import '../../views/trips/widgets/trip_list.dart';
 import '../../widgets/dyma_drawer.dart';
-import '../../models/trip_model.dart';
 import '../../widgets/dyma_loader.dart';
 
 class TripsView extends StatelessWidget {
@@ -40,14 +38,14 @@ class TripsView extends StatelessWidget {
                       TripList(
                         trips: tripProvider.trips
                             .where(
-                              (trip) => DateTime.now().isAfter(trip.date),
+                              (trip) => DateTime.now().isAfter(trip.date!),
                             )
                             .toList(),
                       ),
                       TripList(
                         trips: tripProvider.trips
                             .where(
-                              (trip) => DateTime.now().isBefore(trip.date),
+                              (trip) => DateTime.now().isBefore(trip.date!),
                             )
                             .toList(),
                       ),

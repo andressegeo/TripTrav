@@ -3,8 +3,8 @@ import '../../../models/activity_model.dart';
 import './trip_activity_card.dart';
 
 class TripActivityList extends StatelessWidget {
-  final List<Activity> activities;
-  final Function deleteTripActivity;
+  final List<Activity>? activities;
+  final Function? deleteTripActivity;
 
   void showSelectedActivity(Activity activity) {
     // deleteTripActivity(activity.id);
@@ -17,7 +17,7 @@ class TripActivityList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ListView(
-        children: activities
+        children: activities!
             .map(
               (activity) => TripActivityCard(
                 key: ValueKey(activity

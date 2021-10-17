@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../models/activity_model.dart';
 
 class ActivityCard extends StatelessWidget {
-  final Activity activity;
-  final bool isSelected;
-  final Function toggleActivity;
+  final Activity? activity;
+  final bool? isSelected;
+  final Function? toggleActivity;
 
   ActivityCard({
     this.activity,
@@ -23,10 +23,10 @@ class ActivityCard extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             Ink.image(
-              image: NetworkImage(activity.image),
+              image: NetworkImage(activity!.image!),
               fit: BoxFit.cover,
               child: InkWell(
-                onTap: toggleActivity,
+                onTap: toggleActivity as void Function()?,
               ),
             ),
             Container(
@@ -38,7 +38,7 @@ class ActivityCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        if (isSelected)
+                        if (isSelected!)
                           const Icon(
                             Icons.check,
                             size: 40,
@@ -54,7 +54,7 @@ class ActivityCard extends StatelessWidget {
                         child: FittedBox(
                           // Sur une ligne, remove to see in 2 ligne
                           child: Text(
-                            activity.name,
+                            activity!.name,
                             style: const TextStyle(
                               fontSize: 20,
                               color: Colors.white,

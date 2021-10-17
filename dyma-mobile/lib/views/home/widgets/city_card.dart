@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../models/city_model.dart';
 
 class CityCard extends StatelessWidget {
-  final City city;
+  final City? city;
 
   CityCard({this.city});
 
@@ -26,13 +26,13 @@ class CityCard extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   "/city", // If we passed and unknowRoute(/qsdqlsdj for e.g), it will call not_found view on 404 folder
-                  arguments: city.name,
+                  arguments: city!.name,
                 );
               },
               child: Hero(
-                tag: city.name,
+                tag: city!.name!,
                 child: Image.network(
-                  city.image,
+                  city!.image!,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -45,7 +45,7 @@ class CityCard extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 color: Colors.black54,
                 child: Text(
-                  city.name,
+                  city!.name!,
                   style: const TextStyle(
                     fontSize: 35,
                     color: Colors.white,

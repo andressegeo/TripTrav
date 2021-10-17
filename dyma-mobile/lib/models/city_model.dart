@@ -4,15 +4,15 @@ import '../models/activity_model.dart';
 import 'activity_model.dart';
 
 class City {
-  String id;
-  String image;
-  String name;
+  String? id;
+  String? image;
+  String? name;
   List<Activity> activities;
   City({
-    @required this.id,
-    @required this.image,
-    @required this.name,
-    @required this.activities,
+    required this.id,
+    required this.image,
+    required this.name,
+    required this.activities,
   });
 
   City.fromJson(Map<String, dynamic> json)

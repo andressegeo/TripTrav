@@ -6,14 +6,14 @@ import 'package:project_dyma_end/models/activity_model.dart';
 import 'activity_model.dart';
 
 class Trip {
-  String id;
-  String city;
+  String? id;
+  String? city;
   List<Activity> activities;
-  DateTime date;
+  DateTime? date;
   Trip({
-    @required this.city,
-    @required this.activities,
-    @required this.date,
+    required this.city,
+    required this.activities,
+    required this.date,
   });
 
   Trip.fromJson(Map<String, dynamic> json)
@@ -29,7 +29,7 @@ class Trip {
     return {
       // "_id": id,
       "city": city,
-      "date": date.toIso8601String(), // convert datetime to string
+      "date": date!.toIso8601String(), // convert datetime to string
       "activities": activities
           .map(
             (activity) => activity.toJson(),

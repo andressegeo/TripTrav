@@ -11,11 +11,11 @@ class TripView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("BUILD: TripView");
-    final String cityName = (ModalRoute.of(context).settings.arguments
-        as Map<String, String>)["cityName"];
+    final String cityName = (ModalRoute.of(context)!.settings.arguments
+        as Map<String, String?>)["cityName"]!;
 
-    final String tripId = (ModalRoute.of(context).settings.arguments
-        as Map<String, String>)["tripId"];
+    final String tripId = (ModalRoute.of(context)!.settings.arguments
+        as Map<String, String?>)["tripId"]!;
     final City city = Provider.of<CityProvider>(context, listen: false)
         .getCityByName(cityName);
 

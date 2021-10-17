@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:project_dyma_end/widgets/dyma_loader.dart';
 
 class TripWeather extends StatelessWidget {
-  final String cityName;
+  final String? cityName;
   final String hostBase = "https://api.openweathermap.org/data/2.5/weather?q=";
   final String apiKey = "&appid=7b556b35c4c1521f04d629ecf4343c16";
 
@@ -47,7 +47,7 @@ class TripWeather extends StatelessWidget {
                   ),
                 ),
                 Image.network(
-                  getIconUrl(snapshot.data),
+                  getIconUrl(snapshot.data as String),
                   height: 50,
                   width: 50,
                 )

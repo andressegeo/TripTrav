@@ -6,11 +6,11 @@ import '../../../providers/trip_provider.dart';
 import '../../../models/activity_model.dart';
 
 class TripActivityList extends StatelessWidget {
-  final String tripId;
-  final ActivityStatus filter;
+  final String? tripId;
+  final ActivityStatus? filter;
 
   const TripActivityList({
-    Key key,
+    Key? key,
     this.tripId,
     this.filter,
   }) : super(key: key);
@@ -21,7 +21,7 @@ class TripActivityList extends StatelessWidget {
     return Consumer<TripProvider>(
       builder: (context, tripProvider, child) {
         final Trip trip =
-            Provider.of<TripProvider>(context).getTripById(tripId);
+            Provider.of<TripProvider>(context).getTripById(tripId!);
         final List<Activity> activities = trip.activities
             .where((activity) => activity.status == filter)
             .toList();
@@ -59,7 +59,7 @@ class TripActivityList extends StatelessWidget {
                       ),
                       confirmDismiss: (_) {
                         return Provider.of<TripProvider>(context, listen: false)
-                            .updateTrip(trip, activity.id)
+                            .updateTrip(trip, activity.id!)
                             .then((_) => true)
                             .catchError((_) {
                           print("error then");
