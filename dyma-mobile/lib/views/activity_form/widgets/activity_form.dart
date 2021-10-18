@@ -19,6 +19,7 @@ class _ActivityFormState extends State<ActivityForm> {
   late FocusNode _urlFocusNode;
   late Activity _newActivity;
   String? _nameInputAsync;
+  final TextEditingController _urlControler = TextEditingController();
   bool _isLoading = false;
   FormState get form {
     return _formKey.currentState!;
@@ -36,6 +37,12 @@ class _ActivityFormState extends State<ActivityForm> {
     _priceFocusNode = FocusNode();
     _urlFocusNode = FocusNode();
     super.initState();
+  }
+
+  void updateUrlField(String url) {
+    setState(() {
+      _urlControler.text = url;
+    });
   }
 
   @override
@@ -141,6 +148,7 @@ class _ActivityFormState extends State<ActivityForm> {
             TextFormField(
               keyboardType: TextInputType.url,
               focusNode: _urlFocusNode,
+              controller: _urlControler,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Remplissez l'Url ";
@@ -155,7 +163,7 @@ class _ActivityFormState extends State<ActivityForm> {
             SizedBox(
               height: 10,
             ),
-            ActivityFormImagePicker(),
+            ActivityFormImagePicker(updateUrl: updateUrlField),
             SizedBox(
               height: 30,
             ),

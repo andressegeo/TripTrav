@@ -2,9 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:project_dyma_end/providers/city_provider.dart';
+import 'package:provider/provider.dart';
 
 class ActivityFormImagePicker extends StatefulWidget {
-  const ActivityFormImagePicker({Key? key}) : super(key: key);
+  final Function updateUrl;
+  const ActivityFormImagePicker({Key? key, required this.updateUrl})
+      : super(key: key);
 
   @override
   _ActivityFormImagePickerState createState() =>
@@ -23,6 +27,11 @@ class _ActivityFormImagePickerState extends State<ActivityFormImagePicker> {
         // pour créer un fichier de ce picked file, on File son path simplement
         _deviceImage = File(pickedFile.path);
         print("device image: $_deviceImage");
+        // Action assynchrone car on attend le retour de l'image sachant qu'on va recupérer l'url en sortie
+        final url = await Provider.of<CityProvider>(context, listen: false)
+            .uploadImage(_deviceImage!);
+        print("urlFinal: $url");
+        widget.updateUrl(url);
         setState(() {
           print("rebuild to show image picked");
         });
