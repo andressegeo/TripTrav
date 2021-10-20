@@ -1,7 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
+import 'package:project_dyma_end/apis/google_api.dart';
 import 'package:project_dyma_end/models/activity_model.dart';
 import 'package:project_dyma_end/providers/city_provider.dart';
+import 'package:project_dyma_end/views/activity_form/widgets/activity_form_autocomplete.dart';
+import 'package:project_dyma_end/views/activity_form/widgets/activity_form_image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ActivityForm extends StatefulWidget {
@@ -16,8 +20,11 @@ class _ActivityFormState extends State<ActivityForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late FocusNode _priceFocusNode;
   late FocusNode _urlFocusNode;
+  late FocusNode _addressFocusNode;
   late Activity _newActivity;
-  String? _nameInputAsync;
+  late String? _nameInputAsync;
+  final TextEditingController _urlControler = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   bool _isLoading = false;
   FormState get form {
     return _formKey.currentState!;
@@ -30,17 +37,50 @@ class _ActivityFormState extends State<ActivityForm> {
       name: "",
       price: 0,
       image: "",
+      location: LocationActivity(
+        address: "",
+        latitude: 0,
+        longitude: 0,
+      ),
       status: ActivityStatus.ongoing,
     );
     _priceFocusNode = FocusNode();
     _urlFocusNode = FocusNode();
+    _addressFocusNode = FocusNode();
+    _nameInputAsync = null;
+    _addressFocusNode.addListener(() async {
+      if (_addressFocusNode.hasFocus) {
+        var location = await showInputAutoComplete(context);
+        _newActivity.location = location;
+        setState(() {
+          if (location != null) {
+            _addressController.text = location.address!;
+          }
+        }); // print("location: $location");
+        // Pour revenir lorsqu'on Navigator.pop retour en arrière
+        // Il faut focus sur un autre champ pour que ça fonctionne
+        // Si non, il va no focus puis revenir se focus sur la Dialog du showInputAutoComplete
+        _urlFocusNode.requestFocus();
+      } else {
+        print("no focus");
+      }
+    });
     super.initState();
+  }
+
+  void updateUrlField(String url) {
+    setState(() {
+      _urlControler.text = url;
+    });
   }
 
   @override
   void dispose() {
     _priceFocusNode.dispose();
     _urlFocusNode.dispose();
+    _addressFocusNode.dispose();
+    _urlControler.dispose();
+    _addressController.dispose();
     super.dispose();
   }
 
@@ -51,32 +91,56 @@ class _ActivityFormState extends State<ActivityForm> {
         context,
         listen: false,
       );
-      print("bruu");
       form.validate();
-      print("kiiii");
       _formKey.currentState!.save();
-      print("jkllkj");
       setState(() => _isLoading = true);
-      print("menn");
       _nameInputAsync = await cityProvider.verifyIfActivityNameIsUnique(
         widget.cityName,
         _newActivity.name,
       );
-      // https: //storage.googleapis.com/can-2k19.appspot.com/catacombes.jpeg
-
-      print("menn");
       if (form.validate()) {
-        print("form validate begin");
         await cityProvider.addActivityToCity(_newActivity);
         Navigator.pop(context);
       } else {
-        print("else form val");
         setState(() => _isLoading = false);
       }
     } catch (e) {
       setState(() {
         _isLoading = false;
       });
+    }
+  }
+
+  // installer le paquet location pour faire fonctionner le gps
+  void _getCurrentLocation() async {
+    try {
+      LocationData userLocation = await Location().getLocation();
+      // recupère depuis l'pi geocoding de google l'adresse retourné de la liste de resultat
+      // a partir d'une latitude et d'une longitude
+      var address = await getAddressFromLatLng(
+        lat: userLocation.latitude!,
+        lng: userLocation.longitude!,
+      );
+      // set la nouvelle location à la newActivity
+      _newActivity.location = LocationActivity(
+        address: address,
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
+      );
+
+      // Mettre à jour l'input d'addresse ds le formulaire en lui passant cela dans son controller
+      setState(() {
+        _addressController.text = address;
+      });
+      // this => onLocationChanged method can help
+      // Si on veut montrer sur une map comment un user se  deplace, il faut utiliser cette methode
+      // Location().onLocationChanged.listen((LocationData currentLocation) {
+      //   // Use current location
+      //   print("currentLocation: $currentLocation");
+      // });
+    } catch (e) {
+      print("error_getCurrentLocation: $e");
+      rethrow;
     }
   }
 
@@ -95,18 +159,12 @@ class _ActivityFormState extends State<ActivityForm> {
                 labelText: "Nom",
               ),
               validator: (value) {
-                print("value: $value");
-                print("orange");
-                print("_nameInputAsynccc: $_nameInputAsync");
                 if (value == null || value.isEmpty) {
-                  print("Remplissez le Nom");
                   return "Remplissez le Nom";
                 } else if (_nameInputAsync != "OK") {
-                  print("ffdgkh");
                   print(_nameInputAsync);
                   return _nameInputAsync;
                 } else {
-                  print("I return null men");
                   return null;
                 }
               },
@@ -115,7 +173,7 @@ class _ActivityFormState extends State<ActivityForm> {
               onSaved: (value) => _newActivity.name = value!,
             ),
             SizedBox(
-              height: 10,
+              height: 30,
             ),
             TextFormField(
               keyboardType: TextInputType.number,
@@ -135,11 +193,31 @@ class _ActivityFormState extends State<ActivityForm> {
               onSaved: (value) => _newActivity.price = double.parse(value!),
             ),
             SizedBox(
+              height: 30,
+            ),
+            TextFormField(
+              focusNode: _addressFocusNode,
+              controller: _addressController,
+              decoration: InputDecoration(
+                hintText: "Adresse",
+              ),
+              onSaved: (value) => _newActivity.location!.address = value!,
+            ),
+            SizedBox(
               height: 10,
+            ),
+            TextButton.icon(
+              onPressed: _getCurrentLocation,
+              icon: Icon(Icons.gps_fixed),
+              label: Text("Utiliser ma position actuelle"),
+            ),
+            SizedBox(
+              height: 30,
             ),
             TextFormField(
               keyboardType: TextInputType.url,
               focusNode: _urlFocusNode,
+              controller: _urlControler,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Remplissez l'Url ";
@@ -152,7 +230,11 @@ class _ActivityFormState extends State<ActivityForm> {
               onSaved: (value) => _newActivity.image = value!,
             ),
             SizedBox(
-              height: 10,
+              height: 30,
+            ),
+            ActivityFormImagePicker(updateUrl: updateUrlField),
+            SizedBox(
+              height: 30,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

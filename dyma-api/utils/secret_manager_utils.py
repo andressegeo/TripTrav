@@ -25,6 +25,7 @@ def access_secret_version(secret_id: str, project_nb: str, version_id="latest") 
     return response.payload.data.decode('UTF-8')
 
 
+CLOUD_STORAGE_URL = "https://storage.googleapis.com/"
 PROJECT_ENV = os.environ.get("PROJECT_ENV")
 PROJECT_NAME = "dymatrip"
 ENVS = {
@@ -67,6 +68,8 @@ CONFIG = {
 }
 
 SETTINGS = {
+    "project_id": PROJECT_ID,
+    "cloud_storage_url": CLOUD_STORAGE_URL,
     "connector_uri": CONFIG[PROJECT_ENV][u"mongodb"][u"client"],
     "mongo_db_name": CONFIG[PROJECT_ENV][u"mongodb"][u"database"]
 }

@@ -26,6 +26,21 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your current location for activity</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need your current location for activity</string>
+
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We migth need picture for activity, This form requires access to the photo library</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app require access to the microphone</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We migth need picture for activity, this form requires access to the camera</string>
+
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

@@ -53,7 +53,7 @@ class _CityState extends State<CityView> {
     return myTrip!.activities.fold(
       0.00,
       (previousValue, element) {
-        return previousValue + element.price!;
+        return previousValue + element.price;
       },
     );
   }
