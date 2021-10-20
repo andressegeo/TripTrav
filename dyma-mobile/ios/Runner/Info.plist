@@ -27,6 +27,13 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your current location for activity</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need your current location for activity</string>
+
+
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We migth need picture for activity, This form requires access to the photo library</string>
 	<key>NSMicrophoneUsageDescription</key>

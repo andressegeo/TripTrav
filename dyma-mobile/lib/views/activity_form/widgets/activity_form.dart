@@ -110,6 +110,11 @@ class _ActivityFormState extends State<ActivityForm> {
     }
   }
 
+  // installer le paquet location pour faire fonctionner le gps
+  void _getCurrentLocation() async {
+    print("get locaton");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -168,6 +173,14 @@ class _ActivityFormState extends State<ActivityForm> {
                 hintText: "Adresse",
               ),
               onSaved: (value) => _newActivity.location!.address = value!,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextButton.icon(
+              onPressed: _getCurrentLocation,
+              icon: Icon(Icons.gps_fixed),
+              label: Text("Utiliser ma position actuelle"),
             ),
             SizedBox(
               height: 30,
