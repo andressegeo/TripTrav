@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:project_dyma_end/models/activity_model.dart';
 import 'package:project_dyma_end/providers/city_provider.dart';
+import 'package:project_dyma_end/views/activity_form/widgets/activity_form_autocomplete.dart';
 import 'package:project_dyma_end/views/activity_form/widgets/activity_form_image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -17,9 +18,11 @@ class _ActivityFormState extends State<ActivityForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late FocusNode _priceFocusNode;
   late FocusNode _urlFocusNode;
+  late FocusNode _addressFocusNode;
   late Activity _newActivity;
-  String? _nameInputAsync;
+  late String? _nameInputAsync;
   final TextEditingController _urlControler = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   bool _isLoading = false;
   FormState get form {
     return _formKey.currentState!;
@@ -32,10 +35,35 @@ class _ActivityFormState extends State<ActivityForm> {
       name: "",
       price: 0,
       image: "",
+      location: LocationActivity(
+        address: "",
+        latitude: 0,
+        longitude: 0,
+      ),
       status: ActivityStatus.ongoing,
     );
     _priceFocusNode = FocusNode();
     _urlFocusNode = FocusNode();
+    _addressFocusNode = FocusNode();
+    _nameInputAsync = null;
+    _addressFocusNode.addListener(() async {
+      if (_addressFocusNode.hasFocus) {
+        var location = await showInputAutoComplete(context);
+        print("location: ${location?.address}");
+        _newActivity.location = location;
+        setState(() {
+          if (location != null) {
+            _addressController.text = location.address!;
+          }
+        }); // print("location: $location");
+        // Pour revenir lorsqu'on Navigator.pop retour en arrière
+        // Il faut focus sur un autre champ pour que ça fonctionne
+        // Si non, il va no focus puis revenir se focus sur la Dialog du showInputAutoComplete
+        _urlFocusNode.requestFocus();
+      } else {
+        print("no focus");
+      }
+    });
     super.initState();
   }
 
@@ -49,6 +77,9 @@ class _ActivityFormState extends State<ActivityForm> {
   void dispose() {
     _priceFocusNode.dispose();
     _urlFocusNode.dispose();
+    _addressFocusNode.dispose();
+    _urlControler.dispose();
+    _addressController.dispose();
     super.dispose();
   }
 
@@ -59,26 +90,17 @@ class _ActivityFormState extends State<ActivityForm> {
         context,
         listen: false,
       );
-      print("bruu");
       form.validate();
-      print("kiiii");
       _formKey.currentState!.save();
-      print("jkllkj");
       setState(() => _isLoading = true);
-      print("menn");
       _nameInputAsync = await cityProvider.verifyIfActivityNameIsUnique(
         widget.cityName,
         _newActivity.name,
       );
-      // https: //storage.googleapis.com/can-2k19.appspot.com/catacombes.jpeg
-
-      print("menn");
       if (form.validate()) {
-        print("form validate begin");
         await cityProvider.addActivityToCity(_newActivity);
         Navigator.pop(context);
       } else {
-        print("else form val");
         setState(() => _isLoading = false);
       }
     } catch (e) {
@@ -103,18 +125,12 @@ class _ActivityFormState extends State<ActivityForm> {
                 labelText: "Nom",
               ),
               validator: (value) {
-                print("value: $value");
-                print("orange");
-                print("_nameInputAsynccc: $_nameInputAsync");
                 if (value == null || value.isEmpty) {
-                  print("Remplissez le Nom");
                   return "Remplissez le Nom";
                 } else if (_nameInputAsync != "OK") {
-                  print("ffdgkh");
                   print(_nameInputAsync);
                   return _nameInputAsync;
                 } else {
-                  print("I return null men");
                   return null;
                 }
               },
@@ -123,7 +139,7 @@ class _ActivityFormState extends State<ActivityForm> {
               onSaved: (value) => _newActivity.name = value!,
             ),
             SizedBox(
-              height: 10,
+              height: 30,
             ),
             TextFormField(
               keyboardType: TextInputType.number,
@@ -146,6 +162,17 @@ class _ActivityFormState extends State<ActivityForm> {
               height: 30,
             ),
             TextFormField(
+              focusNode: _addressFocusNode,
+              controller: _addressController,
+              decoration: InputDecoration(
+                hintText: "Adresse",
+              ),
+              onSaved: (value) => _newActivity.location!.address = value!,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            TextFormField(
               keyboardType: TextInputType.url,
               focusNode: _urlFocusNode,
               controller: _urlControler,
@@ -161,7 +188,7 @@ class _ActivityFormState extends State<ActivityForm> {
               onSaved: (value) => _newActivity.image = value!,
             ),
             SizedBox(
-              height: 10,
+              height: 30,
             ),
             ActivityFormImagePicker(updateUrl: updateUrlField),
             SizedBox(

@@ -33,7 +33,7 @@ class _TripActivityCardState extends State<TripActivityCard> {
     return Card(
       child: ListTile(
         leading: CircleAvatar(
-          backgroundImage: NetworkImage(widget.activity!.image!),
+          backgroundImage: NetworkImage(widget.activity!.image),
         ),
         title: Text(
           widget.activity!.name,
@@ -42,7 +42,7 @@ class _TripActivityCardState extends State<TripActivityCard> {
           // Qui est un inheritedWidget
           style: Theme.of(context).textTheme.headline6,
         ),
-        subtitle: Text(widget.activity!.city!),
+        subtitle: Text(widget.activity!.city),
         trailing: IconButton(
           icon: const Icon(Icons.delete),
           color: color,

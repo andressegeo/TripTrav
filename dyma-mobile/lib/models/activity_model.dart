@@ -5,16 +5,18 @@ enum ActivityStatus { ongoing, done }
 class Activity {
   String? id;
   String name;
-  String? image;
-  String? city;
+  String image;
+  String city;
   ActivityStatus status;
-  double? price;
+  double price;
+  LocationActivity? location;
 
   Activity({
     this.id,
     required this.name,
     required this.image,
     required this.city,
+    this.location,
     required this.price,
     this.status = ActivityStatus.ongoing,
   });
@@ -41,4 +43,16 @@ class Activity {
     }
     return value;
   }
+}
+
+class LocationActivity {
+  String? address;
+  double? latitude;
+  double? longitude;
+
+  LocationActivity({
+    this.address,
+    this.latitude,
+    this.longitude,
+  });
 }

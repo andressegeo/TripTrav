@@ -74,7 +74,10 @@ class _ActivityFormImagePickerState extends State<ActivityFormImagePicker> {
             width: double.infinity,
             child: _deviceImage != null
                 ? Image.file(_deviceImage!)
-                : Text("Aucune Image"),
+                : Text(
+                    "Aucune Image",
+                    textAlign: TextAlign.center,
+                  ),
           )
         ],
       ),
