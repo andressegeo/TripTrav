@@ -26,6 +26,10 @@ class Activity {
         name = json["name"],
         image = json["image"],
         city = json["city"],
+        location = LocationActivity(
+            address: json["address"],
+            latitude: json["latitude"],
+            longitude: json["longitude"]),
         price = json["price"].toDouble(),
         status =
             json["status"] == 0 ? ActivityStatus.ongoing : ActivityStatus.done;
@@ -36,6 +40,9 @@ class Activity {
       "image": image,
       "city": city,
       "price": price,
+      "address": location!.address,
+      "latitude": location!.latitude,
+      "longitude": location!.longitude,
       "status": status == ActivityStatus.ongoing ? 0 : 1
     };
     if (id != null) {

@@ -16,6 +16,14 @@ Uri _queryPlaceDetailsBuilder(String placeId) {
       "https://maps.googleapis.com/maps/api/place/details/json?fields=formatted_address%2Cgeometry&place_id=$placeId&key=$GOOGLE_KEY_API");
 }
 
+Uri _queryGetAddressFromLatLngBuilder({
+  required double lat,
+  required double lng,
+}) {
+  return Uri.parse(
+      "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng &key=$GOOGLE_KEY_API");
+}
+
 Future<List<Place>> getAutoCompleteSuggestions(String query) async {
   // Toujours faire un try catch pour call asynchrone
   try {
@@ -70,6 +78,23 @@ Future<LocationActivity> getPlaceDetailsApi(String placeId) async {
     }
   } catch (e) {
     print("errorgetDetails: $e");
+    rethrow;
+  }
+}
+
+Future<String> getAddressFromLatLng(
+    {required double lat, required double lng}) async {
+  try {
+    var response = await http.get(
+      _queryGetAddressFromLatLngBuilder(lat: lat, lng: lng),
+    );
+    if (response.statusCode == 200) {
+      var body = json.decode(response.body)["results"][0]["formatted_address"];
+      return body;
+    } else {
+      throw "error getAddressFromLatLng";
+    }
+  } catch (e) {
     rethrow;
   }
 }

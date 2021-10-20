@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
+import 'package:project_dyma_end/apis/google_api.dart';
 import 'package:project_dyma_end/models/activity_model.dart';
 import 'package:project_dyma_end/providers/city_provider.dart';
 import 'package:project_dyma_end/views/activity_form/widgets/activity_form_autocomplete.dart';
@@ -49,7 +51,6 @@ class _ActivityFormState extends State<ActivityForm> {
     _addressFocusNode.addListener(() async {
       if (_addressFocusNode.hasFocus) {
         var location = await showInputAutoComplete(context);
-        print("location: ${location?.address}");
         _newActivity.location = location;
         setState(() {
           if (location != null) {
@@ -112,7 +113,35 @@ class _ActivityFormState extends State<ActivityForm> {
 
   // installer le paquet location pour faire fonctionner le gps
   void _getCurrentLocation() async {
-    print("get locaton");
+    try {
+      LocationData userLocation = await Location().getLocation();
+      // recupère depuis l'pi geocoding de google l'adresse retourné de la liste de resultat
+      // a partir d'une latitude et d'une longitude
+      var address = await getAddressFromLatLng(
+        lat: userLocation.latitude!,
+        lng: userLocation.longitude!,
+      );
+      // set la nouvelle location à la newActivity
+      _newActivity.location = LocationActivity(
+        address: address,
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
+      );
+
+      // Mettre à jour l'input d'addresse ds le formulaire en lui passant cela dans son controller
+      setState(() {
+        _addressController.text = address;
+      });
+      // this => onLocationChanged method can help
+      // Si on veut montrer sur une map comment un user se  deplace, il faut utiliser cette methode
+      // Location().onLocationChanged.listen((LocationData currentLocation) {
+      //   // Use current location
+      //   print("currentLocation: $currentLocation");
+      // });
+    } catch (e) {
+      print("error_getCurrentLocation: $e");
+      rethrow;
+    }
   }
 
   @override
