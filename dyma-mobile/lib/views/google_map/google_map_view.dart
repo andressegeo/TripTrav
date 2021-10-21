@@ -30,16 +30,24 @@ class _GoogleMapViewState extends State<GoogleMapView> {
     super.didChangeDependencies();
   }
 
+  get _activityLatLng {
+    return LatLng(
+      _activity.location!.latitude!,
+      _activity.location!.longitude!,
+    );
+  }
+
   get _initialCameraPosition {
     return CameraPosition(
       // le bearing tourne la carte suivant l'angle que tu lui passes
       // bearing: 90,
-      target: LatLng(
-        _activity.location!.latitude!,
-        _activity.location!.longitude!,
-      ),
+      target: _activityLatLng,
       zoom: 16.0,
     );
+  }
+
+  void _openUrl() {
+    print("should open url");
   }
 
   @override
@@ -52,6 +60,21 @@ class _GoogleMapViewState extends State<GoogleMapView> {
         initialCameraPosition: _initialCameraPosition,
         mapType: MapType.normal,
         onMapCreated: (controller) => _controller = controller,
+        markers: Set.of(
+          [
+            Marker(
+              markerId: MarkerId("123"), // Le markerId doit être unique
+              flat: true,
+              position: _activityLatLng,
+              onTap: () => print("hello"),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: Icon(Icons.directions_car),
+        onPressed: _openUrl,
+        label: Text("Go"),
       ),
     );
   }
