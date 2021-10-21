@@ -102,6 +102,18 @@ class TripProvider with ChangeNotifier {
     }
   }
 
-  Trip getTripById(String tripId) =>
-      trips.firstWhere((trip) => trip.id == tripId);
+  Trip getTripById(String tripId) {
+    return trips.firstWhere((trip) => trip.id == tripId);
+  }
+
+  // Quand on clique sur une trip pour voir son détail d'activités,
+  // On va parcourir la collection trips pour recupérer le trip en question par son Id
+  // et quand on a le trip en question, on va recupérer son activité en question
+  // grace à l'id de l'activité sur laquelle on a cliqué
+  Activity getActivityByIds(
+      {required String activityId, required String tripId}) {
+    return getTripById(tripId)
+        .activities
+        .firstWhere((activity) => activity.id == activityId);
+  }
 }
