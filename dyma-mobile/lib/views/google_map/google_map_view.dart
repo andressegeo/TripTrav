@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project_dyma_end/models/activity_model.dart';
 import 'package:project_dyma_end/providers/trip_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GoogleMapView extends StatefulWidget {
   static const String routeName = "/google-map";
@@ -46,8 +49,24 @@ class _GoogleMapViewState extends State<GoogleMapView> {
     );
   }
 
-  void _openUrl() {
-    print("should open url");
+  Future<void> _openUrl() async {
+    final String _url;
+    if (Platform.isAndroid) {
+      print("this is an android Os");
+      _url = 'google.navigation:q=${_activity.location!.address}';
+    } else {
+      print("this is an IOS Os");
+      _url =
+          'https://maps.apple.com/?q=${_activity.location!.latitude},${_activity.location!.longitude}';
+    }
+    print("urll: $_url");
+    if (await canLaunch(_url)) {
+      await launch(_url);
+    } else if (await canLaunch(_url)) {
+      await launch(_url);
+    } else {
+      throw "can not launch _url";
+    }
   }
 
   @override
