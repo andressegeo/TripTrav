@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_dyma_end/models/trip_model.dart';
+import 'package:project_dyma_end/views/google_map/google_map_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/trip_provider.dart';
@@ -52,9 +53,19 @@ class TripActivityList extends StatelessWidget {
                         ),
                       ),
                       key: ValueKey(activity.id),
-                      child: Card(
-                        child: ListTile(
-                          title: Text(activity.name),
+                      child: InkWell(
+                        child: Card(
+                          child: ListTile(
+                            title: Text(activity.name),
+                          ),
+                        ),
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          GoogleMapView.routeName,
+                          arguments: {
+                            "activityId": activity.id,
+                            "tripId": trip.id!,
+                          },
                         ),
                       ),
                       confirmDismiss: (_) {
