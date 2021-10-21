@@ -63,7 +63,7 @@ class TripActivityList extends StatelessWidget {
                           context,
                           GoogleMapView.routeName,
                           arguments: {
-                            "activityId": activity.id!,
+                            "activityId": activity.id,
                             "tripId": trip.id!,
                           },
                         ),
