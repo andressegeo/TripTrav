@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project_dyma_end/views/activity_form/activity_form_view.dart';
 import 'package:project_dyma_end/views/google_map/google_map_view.dart';
 import 'package:project_dyma_end/views/trip/trip_view.dart';
@@ -13,6 +14,9 @@ import 'views/home/home_view.dart';
 import 'views/city/city_view.dart';
 
 main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIOverlays(
+      [SystemUiOverlay.bottom, SystemUiOverlay.top]);
   runApp(DymaTrip());
 }
 
