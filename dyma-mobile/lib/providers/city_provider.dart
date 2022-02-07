@@ -10,7 +10,8 @@ import "package:http_parser/http_parser.dart";
 
 class CityProvider with ChangeNotifier {
   // final String host = "http://localhost:5000";
-  final String host = "http://dymatrip-dev.appspot.com/";
+  // final String host = "http://dymatrip-dev.appspot.com/";
+  final String host = "https://triptrav-api-e22cijqu4q-ew.a.run.app/";
 
   bool isLoading = false;
   List<City> _cities = [];
