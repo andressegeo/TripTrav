@@ -1,4 +1,4 @@
-# project_dymaTrip
+# TripTrav Mobile Flutter
 
 A new Flutter project.
 After git clone

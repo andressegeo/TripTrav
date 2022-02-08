@@ -24,7 +24,7 @@
   </queries>
   
    <application
-        android:label="project_dyma_end"
+        android:label="Triptrav"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
 

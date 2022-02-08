@@ -12,7 +12,7 @@ class DymaDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             child: Text(
-              "DymaTrip",
+              "Trip Trav",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 30,
