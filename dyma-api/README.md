@@ -1,4 +1,4 @@
-# project_dymaTrip_python_part
+# TripTrav Backend Server
 
 before begining first of all
 export PROJECT_ENV=dev

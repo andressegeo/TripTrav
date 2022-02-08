@@ -57,7 +57,7 @@ class _HomeState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         // leading: Icon(Icons.home),
-        title: const Text("DymaTrip"),
+        title: const Text("Trip Trav"),
         actions: [Icon(Icons.more_vert)],
       ),
       drawer: const DymaDrawer(), // (Tiroir) por le menu coulissant de gauche
