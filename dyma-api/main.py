@@ -65,13 +65,9 @@ except:
         return flask_constructor_error("Method not allowed", 405, err.__class__.__name__)
 
 if __name__ == "__main__":
-    print("hello")
     app.config['DEBUG'] = True
     app.run(
         threaded=True,
-        port=int(
-            os.environ.get("PORT", 8080)
-        ),
         debug=True,
         host="0.0.0.0"
     )
