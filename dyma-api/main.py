@@ -36,9 +36,6 @@ except:
     for e in sys.exc_info():
         print(e)
 
-if __name__ == "__main__":
-    app.config['DEBUG'] = True
-
     @app.errorhandler(403)
     def user_forbidden(err):
         """View function that return an error handler(user forbidden).
@@ -66,4 +63,15 @@ if __name__ == "__main__":
                 Flask Response
         """
         return flask_constructor_error("Method not allowed", 405, err.__class__.__name__)
-    app.run(threaded=True, port=5000, debug=True)
+
+if __name__ == "__main__":
+    print("hello")
+    app.config['DEBUG'] = True
+    app.run(
+        threaded=True,
+        port=int(
+            os.environ.get("PORT", 8080)
+        ),
+        debug=True,
+        host="0.0.0.0"
+    )
